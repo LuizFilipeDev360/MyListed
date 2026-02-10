@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyListed.API.DTOs;
 using MyListed.API.Models;
 
 namespace MyListed.API.Controllers;
@@ -11,28 +13,37 @@ public class MediaController : ControllerBase
     private static List<Media> _lista = new List<Media>();
     static int _nextId = 1;
 
-    [HttpGet]
-    public IEnumerable<Media> GetAllMedia()
+    IMapper _mapper;
+
+    public MediaController(IMapper mapper)
     {
-        return _lista;
+        _mapper = mapper;
+    }
+
+    [HttpGet]
+    public IEnumerable<ReadMediaDto> GetAllMedia()
+    {
+        return _mapper.Map<List<ReadMediaDto>>(_lista);
     }
 
     [HttpPost]
-    public IActionResult PostMedia([FromBody] Media media)
-    {
+    public IActionResult PostMedia([FromBody] CreateMediaDto mediaDto)
+    {   
+        Media media = _mapper.Map<Media>(mediaDto);
         media.Id = _nextId++;
         _lista.Add(media);
         return CreatedAtAction(nameof(GetAllMedia), new { id = media.Id }, media);
     }
 
     [HttpPut("{id}")]
-    public IActionResult PutMedia(int id, [FromBody] Media media)
+    public IActionResult PutMedia(int id, [FromBody] UpdateMediaDto mediaDto)
     {
         var item = _lista.FirstOrDefault(m => m.Id == id);
         if (item == null)
         {
             return NotFound();
         }
+        var media = _mapper.Map<Media>(mediaDto);
         item.Title = media.Title;
         item.Description = media.Description;
         item.Year = media.Year;
