@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyListed.API.DTOs;
 using MyListed.API.Models;
+using MyListed.API.Services;
 
 namespace MyListed.API.Controllers;
 
@@ -10,44 +11,34 @@ namespace MyListed.API.Controllers;
 [ApiController]
 public class MediaController : ControllerBase
 {
-    private static List<Media> _lista = new List<Media>();
-    static int _nextId = 1;
+    MediaService _service;
 
-    IMapper _mapper;
-
-    public MediaController(IMapper mapper)
+    public MediaController(MediaService service)
     {
-        _mapper = mapper;
+        _service = service;
     }
 
     [HttpGet]
     public IEnumerable<ReadMediaDto> GetAllMedia()
     {
-        return _mapper.Map<List<ReadMediaDto>>(_lista);
+        return _service.GetAllMedia();
     }
 
     [HttpPost]
     public IActionResult PostMedia([FromBody] CreateMediaDto mediaDto)
     {   
-        Media media = _mapper.Map<Media>(mediaDto);
-        media.Id = _nextId++;
-        _lista.Add(media);
+        Media media = _service.AddMedia(mediaDto);
         return CreatedAtAction(nameof(GetAllMedia), new { id = media.Id }, media);
     }
 
     [HttpPut("{id}")]
     public IActionResult PutMedia(int id, [FromBody] UpdateMediaDto mediaDto)
     {
-        var item = _lista.FirstOrDefault(m => m.Id == id);
-        if (item == null)
+        var exist = _service.UpdateMedia(id, mediaDto);
+        if (exist != true)
         {
             return NotFound();
         }
-        var media = _mapper.Map<Media>(mediaDto);
-        item.Title = media.Title;
-        item.Description = media.Description;
-        item.Year = media.Year;
-        item.Type = media.Type;
         return NoContent();
     }
 
@@ -55,12 +46,11 @@ public class MediaController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteMedia(int id)
     {
-        var item = _lista.FirstOrDefault(m => m.Id == id);
-        if (item == null)
+        var exist = _service.DeleteMedia(id);
+        if (exist != true)
         {
             return NotFound();
         }
-        _lista.Remove(item);
         return NoContent();
     }
 }
