@@ -40,7 +40,7 @@ public class MediaService
         item.Title = media.Title;
         item.Description = media.Description;
         item.Year = media.Year;
-        item.Type = media.Type;
+        item.Kind = media.Kind;
         return true;
     }
 

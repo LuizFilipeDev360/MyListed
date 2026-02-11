@@ -9,7 +9,12 @@ public class MediaProfile : Profile
     public MediaProfile()
     {
         CreateMap<CreateMediaDto, Media>();
-        CreateMap<Media, ReadMediaDto>();
+        CreateMap<Media, ReadMediaDto>().ForMember(dest => dest.Kind,
+        opt => opt.MapFrom(src => new MediaKindDto
+        {
+            Id = (int)src.Kind,
+            Name = src.Kind.ToString()
+        })); ;
         CreateMap<UpdateMediaDto, Media>();
     }
 }

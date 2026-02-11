@@ -1,9 +1,16 @@
-﻿namespace MyListed.API.DTOs;
+﻿using Microsoft.AspNetCore.Mvc.Formatters;
+using MyListed.API.Models;
+using System.ComponentModel.DataAnnotations;
+
+namespace MyListed.API.DTOs;
 
 public class CreateMediaDto
 {
+    [Required(ErrorMessage = "The film title is required.")]
     public string Title { get; set; }
+    [Range(1000, 3000)]
     public int Year { get; set; }
-    public string Type { get; set; }
+    public MediaKind Kind { get; set; }
+    [MaxLength(1000)]
     public string Description { get; set; }
 }
