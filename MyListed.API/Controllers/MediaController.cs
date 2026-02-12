@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyListed.API.DTOs;
 using MyListed.API.Models;
@@ -19,16 +18,32 @@ public class MediaController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<ReadMediaDto> GetAllMedia()
+    public IEnumerable<ReadMediaDto> GetMedia([FromQuery] string mediaString = null)
     {
-        return _service.GetAllMedia();
+        if (string.IsNullOrEmpty(mediaString))
+        {
+            return _service.GetAllMedia();
+        }
+        var media = _service.GetMedia(mediaString);
+        return media;
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetMediaById(int id)
+    {
+        var media = _service.GetMediaById(id);
+        if (media == null)
+        {
+            return NotFound();
+        }
+        return Ok(media);
     }
 
     [HttpPost]
     public IActionResult PostMedia([FromBody] CreateMediaDto mediaDto)
     {   
         Media media = _service.AddMedia(mediaDto);
-        return CreatedAtAction(nameof(GetAllMedia), new { id = media.Id }, media);
+        return CreatedAtAction(nameof(GetMedia), new { id = media.Id }, media);
     }
 
     [HttpPut("{id}")]
@@ -40,6 +55,18 @@ public class MediaController : ControllerBase
             return NotFound();
         }
         return NoContent();
+    }
+
+    [HttpPatch("{id}")]
+    public IActionResult PatchMedia(int id, PartialUpdateMediaDto mediaDto)
+    {
+        var exist = _service.PartialUpdateMedia(id, mediaDto);
+        if (exist != true)
+        {
+            return NotFound();
+        }
+        return NoContent();
+
     }
 
 

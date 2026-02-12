@@ -9,8 +9,8 @@ public class CreateMediaDto
     [Required(ErrorMessage = "The film title is required.")]
     public string Title { get; set; }
     [Range(1000, 3000)]
-    public int Year { get; set; }
-    public MediaKind Kind { get; set; }
+    public int? Year { get; set; }
+    public MediaKind Kind { get; set; } = 0;
     [MaxLength(1000)]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 }

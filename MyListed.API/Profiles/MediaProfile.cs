@@ -16,5 +16,10 @@ public class MediaProfile : Profile
             Name = src.Kind.ToString()
         })); ;
         CreateMap<UpdateMediaDto, Media>();
+
+        CreateMap<PartialUpdateMediaDto, Media>().ForAllMembers(opt =>
+        opt.Condition((src, dest, srcMember) => srcMember != null));
+
+
     }
 }

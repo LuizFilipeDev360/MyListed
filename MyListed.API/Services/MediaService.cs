@@ -21,6 +21,23 @@ public class MediaService
         return _mapper.Map<List<ReadMediaDto>>(_lista);
     }
 
+    public ReadMediaDto? GetMediaById(int id)
+    {
+        var item = _lista.FirstOrDefault(m => m.Id == id);
+        if (item == null)
+        {
+            return null;
+        }
+        return _mapper.Map<ReadMediaDto>(item);
+    }
+
+    public IEnumerable<ReadMediaDto>? GetMedia(string mediaString)
+    {
+        var items = _lista.FindAll(m => m.Title.ToLower().Contains(mediaString.ToLower()));
+
+        return _mapper.Map<List<ReadMediaDto>>(items);
+    }
+
     public Media AddMedia(CreateMediaDto mediaDto)
     {
         var media = _mapper.Map<Media>(mediaDto);
@@ -41,6 +58,20 @@ public class MediaService
         item.Description = media.Description;
         item.Year = media.Year;
         item.Kind = media.Kind;
+        return true;
+    }
+
+    public bool PartialUpdateMedia(int id, PartialUpdateMediaDto mediaDto)
+    {
+        var item = _lista.FirstOrDefault(m => m.Id == id);
+
+        if (item == null)
+        {
+            return false;
+        }
+
+        _mapper.Map(mediaDto, item);
+
         return true;
     }
 

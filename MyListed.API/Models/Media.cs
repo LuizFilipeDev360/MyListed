@@ -10,8 +10,8 @@ public class Media
     [Required(ErrorMessage ="O titulo do filme é obrigatório")]
     public string Title { get; set; }
     [Range(1000, 3000)]
-    public int Year { get; set; }
+    public int? Year { get; set; }
     public MediaKind Kind { get; set; }
     [MaxLength(1000)]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 }
