@@ -1,6 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using MyListed.API.Data;
 using MyListed.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration["ConnectionStrings:MediaConnection"];
+
+builder.Services.AddDbContext<MediaContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Add services to the container.
 
