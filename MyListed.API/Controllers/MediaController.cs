@@ -18,20 +18,20 @@ public class MediaController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<ReadMediaDto> GetMedia([FromQuery] string mediaString = null)
+    public IEnumerable<ReadMediaDto> Get([FromQuery] string mediaString = null)
     {
         if (string.IsNullOrEmpty(mediaString))
         {
-            return _service.GetAllMedia();
+            return _service.GetAll();
         }
-        var media = _service.GetMedia(mediaString);
+        var media = _service.GetByString(mediaString);
         return media;
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetMediaById(int id)
+    public IActionResult GetById(int id)
     {
-        var media = _service.GetMediaById(id);
+        var media = _service.GetById(id);
         if (media == null)
         {
             return NotFound();
@@ -40,16 +40,16 @@ public class MediaController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult PostMedia([FromBody] CreateMediaDto mediaDto)
+    public IActionResult Post([FromBody] CreateMediaDto mediaDto)
     {   
-        Media media = _service.AddMedia(mediaDto);
-        return CreatedAtAction(nameof(GetMedia), new { id = media.Id }, media);
+        Media media = _service.Create(mediaDto);
+        return CreatedAtAction(nameof(Get), new { id = media.Id }, media);
     }
 
     [HttpPut("{id}")]
-    public IActionResult PutMedia(int id, [FromBody] UpdateMediaDto mediaDto)
+    public IActionResult Put(int id, [FromBody] UpdateMediaDto mediaDto)
     {
-        var exist = _service.UpdateMedia(id, mediaDto);
+        var exist = _service.Update(id, mediaDto);
         if (exist != true)
         {
             return NotFound();
@@ -58,9 +58,9 @@ public class MediaController : ControllerBase
     }
 
     [HttpPatch("{id}")]
-    public IActionResult PatchMedia(int id, PartialUpdateMediaDto mediaDto)
+    public IActionResult Patch(int id, PartialUpdateMediaDto mediaDto)
     {
-        var exist = _service.PartialUpdateMedia(id, mediaDto);
+        var exist = _service.PartialUpdate(id, mediaDto);
         if (exist != true)
         {
             return NotFound();
@@ -71,9 +71,9 @@ public class MediaController : ControllerBase
 
 
     [HttpDelete("{id}")]
-    public IActionResult DeleteMedia(int id)
+    public IActionResult Delete(int id)
     {
-        var exist = _service.DeleteMedia(id);
+        var exist = _service.Delete(id);
         if (exist != true)
         {
             return NotFound();

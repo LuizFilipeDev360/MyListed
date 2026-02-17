@@ -2,29 +2,30 @@
 using MyListed.API.Data;
 using MyListed.API.DTOs;
 using MyListed.API.Models;
+using MyListed.API.Repository;
 
 namespace MyListed.API.Services;
 
 public class MediaService
 {
     private IMapper _mapper;
-    private MediaContext _context;
+    private MediaRepository _repository;
 
-    public MediaService(IMapper mapper, MediaContext context)
+    public MediaService(IMapper mapper, MediaRepository repository)
     {
         _mapper = mapper;
-        _context = context;
+        _repository = repository;
     }
 
-    public IEnumerable<ReadMediaDto> GetAllMedia()
+    public IEnumerable<ReadMediaDto> GetAll()
     {
-        var result = _context.Media;
+        var result = _repository.GetAll();
         return _mapper.Map<List<ReadMediaDto>>(result);
     }
 
-    public ReadMediaDto? GetMediaById(int id)
+    public ReadMediaDto? GetById(int id)
     {
-        var item = _context.Media.FirstOrDefault(m => m.Id == id);
+        var item = _repository.GetById(id);
         if (item == null)
         {
             return null;
@@ -32,37 +33,37 @@ public class MediaService
         return _mapper.Map<ReadMediaDto>(item);
     }
 
-    public IEnumerable<ReadMediaDto>? GetMedia(string mediaString)
+    public IEnumerable<ReadMediaDto>? GetByString(string mediaString)
     {
-        var items = _context.Media.Where(m => m.Title.ToLower().Contains(mediaString.ToLower()));   //FindAll(m => m.Title.ToLower().Contains(mediaString.ToLower()));
+        var items = _repository.GetByString(mediaString);
 
         return _mapper.Map<List<ReadMediaDto>>(items);
     }
 
-    public Media AddMedia(CreateMediaDto mediaDto)
+    public Media Create(CreateMediaDto mediaDto)
     {
         var media = _mapper.Map<Media>(mediaDto);
-        _context.Add(media);
-        _context.SaveChanges();
+        _repository.Add(media);
+        _repository.SaveChanges();
         return media;
     }
 
-    public bool UpdateMedia(int id, UpdateMediaDto mediaDto)
+    public bool Update(int id, UpdateMediaDto mediaDto)
     {
-        var item = _context.Media.FirstOrDefault(m => m.Id == id);
+        var item = _repository.GetById(id);
         if (item == null)
         {
             return false;
         }
-       _mapper.Map(mediaDto, item);
-        _context.Media.Update(item);
-        _context.SaveChanges();
+        _mapper.Map(mediaDto, item);
+        _repository.Update(item);
+        _repository.SaveChanges();
         return true;
     }
 
-    public bool PartialUpdateMedia(int id, PartialUpdateMediaDto mediaDto)
+    public bool PartialUpdate(int id, PartialUpdateMediaDto mediaDto)
     {
-        var item = _context.Media.FirstOrDefault(m => m.Id == id);
+        var item = _repository.GetById(id);
 
         if (item == null)
         {
@@ -70,21 +71,21 @@ public class MediaService
         }
 
         _mapper.Map(mediaDto, item);
-        _context.Media.Update(item);
-        _context.SaveChanges();
+        _repository.Update(item);
+        _repository.SaveChanges();
 
         return true;
     }
 
-    public bool DeleteMedia(int id)
+    public bool Delete(int id)
     {
-        var item = _context.Media.FirstOrDefault(m => m.Id == id);
+        var item = _repository.GetById(id);
         if (item == null)
         {
             return false;
         }
-        _context.Media.Remove(item);
-        _context.SaveChanges();
+        _repository.Remove(item);
+        _repository.SaveChanges();
         return true;
     }
 }
