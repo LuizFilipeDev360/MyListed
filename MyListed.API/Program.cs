@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MyListed.API.Data;
+using MyListed.API.Repository;
 using MyListed.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<MediaService>();
+builder.Services.AddScoped<MediaRepository>();
 
 var app = builder.Build();
 
