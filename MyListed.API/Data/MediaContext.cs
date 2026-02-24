@@ -11,4 +11,5 @@ public class MediaContext : DbContext
     }
 
     public DbSet<Media> Media { get; set; }
+    public DbSet<Genre> Genres { get; set; }
 }

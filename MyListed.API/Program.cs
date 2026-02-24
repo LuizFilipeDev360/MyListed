@@ -21,6 +21,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<MediaService>();
 builder.Services.AddScoped<MediaRepository>();
 
+builder.Services.AddScoped<GenreService>();
+builder.Services.AddScoped<GenreRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
