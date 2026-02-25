@@ -1,5 +1,7 @@
-﻿using MyListed.API.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MyListed.API.Data;
 using MyListed.API.Models;
+using System.Threading.Tasks;
 
 namespace MyListed.API.Repository;
 
@@ -14,17 +16,33 @@ public class MediaRepository
 
     public IEnumerable<Media> GetAll()
     {
-        return _context.Media; 
+        var media = _context.Media.Include(m => m.MediaGenres).ThenInclude(mg => mg.Genre).AsQueryable();
+        return media;
     }
 
-    public Media? GetById(int id)
+    public async Task<Media?> GetById(int id)
     {
-        return _context.Media.FirstOrDefault(m => m.Id == id);
+        var media = await _context.Media.Include(m => m.MediaGenres).ThenInclude(mg => mg.Genre).FirstOrDefaultAsync(m => m.Id == id);
+        return media;
     }
 
     public IEnumerable<Media> GetByString(string s)
     {
-        return _context.Media.Where(m => m.Title.ToLower().Contains(s.ToLower()));
+        s = s.ToLower();
+
+        var query = _context.Media
+        .Include(m => m.MediaGenres)
+            .ThenInclude(mg => mg.Genre)
+        .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(s))
+        {
+            query = query.Where(m =>
+                EF.Functions.Like(m.Title.ToLower(), $"%{s}%"));
+        }
+
+
+        return query;
     }
 
     public void Add(Media media)

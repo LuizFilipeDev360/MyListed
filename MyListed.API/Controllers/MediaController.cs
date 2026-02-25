@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyListed.API.DTOs;
 using MyListed.API.Models;
 using MyListed.API.Services;
+using System.Threading.Tasks;
 
 namespace MyListed.API.Controllers;
 
@@ -47,9 +48,9 @@ public class MediaController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] UpdateMediaDto mediaDto)
+    public async Task<IActionResult> PutAsync(int id, [FromBody] UpdateMediaDto mediaDto)
     {
-        var exist = _service.Update(id, mediaDto);
+        var exist = await _service.UpdateAsync(id, mediaDto);
         if (exist != true)
         {
             return NotFound();
@@ -58,9 +59,9 @@ public class MediaController : ControllerBase
     }
 
     [HttpPatch("{id}")]
-    public IActionResult Patch(int id, PartialUpdateMediaDto mediaDto)
+    public async Task<IActionResult> PatchAsync(int id, PartialUpdateMediaDto mediaDto)
     {
-        var exist = _service.PartialUpdate(id, mediaDto);
+        var exist = await _service.PartialUpdateAsync(id, mediaDto);
         if (exist != true)
         {
             return NotFound();
@@ -71,9 +72,9 @@ public class MediaController : ControllerBase
 
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> DeleteAsync(int id)
     {
-        var exist = _service.Delete(id);
+        var exist = await _service.Delete(id);
         if (exist != true)
         {
             return NotFound();

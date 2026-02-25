@@ -9,4 +9,6 @@ public class Genre
     public int Id { get; set; }
     [Required(ErrorMessage = "O nome do gênero é obrigatório")]
     public string Name { get; set; }
+
+    public ICollection<MediaGenre>? MediaGenres { get; set; } = new List<MediaGenre>();
 }

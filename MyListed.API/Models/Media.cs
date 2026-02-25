@@ -14,4 +14,6 @@ public class Media
     public MediaKind Kind { get; set; }
     [MaxLength(1000)]
     public string? Description { get; set; }
+
+    public ICollection<MediaGenre>? MediaGenres { get; set; } = new List<MediaGenre>();
 }

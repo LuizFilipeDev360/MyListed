@@ -10,6 +10,15 @@ public class MediaContext : DbContext
         
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<MediaGenre>()
+            .HasKey(mc => new { mc.MediaId, mc.GenreId });
+
+        base.OnModelCreating(modelBuilder);
+    }
+
     public DbSet<Media> Media { get; set; }
     public DbSet<Genre> Genres { get; set; }
+    public DbSet<MediaGenre> MediaGenres { get; set; }
 }

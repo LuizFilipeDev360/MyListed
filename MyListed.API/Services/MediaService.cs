@@ -3,6 +3,7 @@ using MyListed.API.Data;
 using MyListed.API.DTOs;
 using MyListed.API.Models;
 using MyListed.API.Repository;
+using System.Threading.Tasks;
 
 namespace MyListed.API.Services;
 
@@ -48,22 +49,32 @@ public class MediaService
         return media;
     }
 
-    public bool Update(int id, UpdateMediaDto mediaDto)
+    public async Task<bool> UpdateAsync(int id, UpdateMediaDto mediaDto)
     {
-        var item = _repository.GetById(id);
+        var item = await _repository.GetById(id);
         if (item == null)
         {
             return false;
         }
         _mapper.Map(mediaDto, item);
+
+        item.MediaGenres.Clear();
+
+        item.MediaGenres = mediaDto.GenreIds
+            .Select(id => new MediaGenre
+            {
+                MediaId = item.Id,
+                GenreId = id
+            }).ToList();
+
         _repository.Update(item);
         _repository.SaveChanges();
         return true;
     }
 
-    public bool PartialUpdate(int id, PartialUpdateMediaDto mediaDto)
+    public async Task<bool> PartialUpdateAsync(int id, PartialUpdateMediaDto mediaDto)
     {
-        var item = _repository.GetById(id);
+        var item = await _repository.GetById(id);
 
         if (item == null)
         {
@@ -71,15 +82,27 @@ public class MediaService
         }
 
         _mapper.Map(mediaDto, item);
+
+        if (mediaDto.GenreIds != null)
+        {
+            item.MediaGenres.Clear();
+
+            item.MediaGenres = mediaDto.GenreIds
+                .Select(id => new MediaGenre
+                {
+                    MediaId = item.Id,
+                    GenreId = id
+                }).ToList();
+        }
         _repository.Update(item);
         _repository.SaveChanges();
 
         return true;
     }
 
-    public bool Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        var item = _repository.GetById(id);
+        var item = await _repository.GetById(id);
         if (item == null)
         {
             return false;

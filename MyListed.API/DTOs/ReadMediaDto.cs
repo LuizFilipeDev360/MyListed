@@ -10,4 +10,5 @@ public class ReadMediaDto
     public int? Year { get; set; }
     public MediaKindDto Kind { get; set; }
     public string? Description { get; set; }
+    public List<string> Genres { get; set; }
 }

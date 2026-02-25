@@ -10,4 +10,5 @@ public class PartialUpdateMediaDto
     public MediaKind? Kind { get; set; }
     [MaxLength(1000)]
     public string? Description { get; set; }
+    public List<int>? GenreIds { get; set; }
 }
