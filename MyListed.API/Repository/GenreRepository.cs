@@ -1,5 +1,7 @@
-﻿using MyListed.API.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MyListed.API.Data;
 using MyListed.API.Models;
+using System.Threading.Tasks;
 
 namespace MyListed.API.Repository;
 
@@ -12,19 +14,29 @@ public class GenreRepository
         _context = context;
     }
 
-    public IEnumerable<Genre> GetAll()
+    public async Task<IEnumerable<Genre>> GetAllAsync()
     {
-        return _context.Genres; 
+        var genre =  _context.Genres;
+        return await genre.ToListAsync();
     }
 
-    public Genre? GetById(int id)
+    public async Task<Genre?> GetByIdAsync(int id)
     {
-        return _context.Genres.FirstOrDefault(m => m.Id == id);
+        var genre =  await _context.Genres.FirstOrDefaultAsync(m => m.Id == id);
+        return genre;
     }
 
-    public IEnumerable<Genre> GetByString(string s)
+    public async Task<IEnumerable<Genre>> GetByStringAsync(string s)
     {
-        return _context.Genres.Where(m => m.Name.ToLower().Contains(s.ToLower()));
+        var query = _context.Genres.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(s))
+        {
+            query = query.Where(m =>
+                EF.Functions.Like(m.Name, $"%{s}%"));
+        }
+
+        return await query.ToListAsync();
     }
 
     public void Add(Genre genre)
@@ -42,8 +54,8 @@ public class GenreRepository
         _context.Genres.Remove(genre);
     }
 
-    public void SaveChanges()
+    public async Task SaveChangesAsync()
     {
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 }

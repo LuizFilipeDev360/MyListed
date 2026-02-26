@@ -18,15 +18,15 @@ public class MediaService
         _repository = repository;
     }
 
-    public IEnumerable<ReadMediaDto> GetAll()
+    public async Task<IEnumerable<ReadMediaDto>> GetAllAsync()
     {
-        var result = _repository.GetAll();
+        var result = await _repository.GetAllAsync();
         return _mapper.Map<List<ReadMediaDto>>(result);
     }
 
-    public ReadMediaDto? GetById(int id)
+    public async Task<ReadMediaDto?> GetByIdAsync(int id)
     {
-        var item = _repository.GetById(id);
+        var item =await _repository.GetByIdAsync(id);
         if (item == null)
         {
             return null;
@@ -34,24 +34,24 @@ public class MediaService
         return _mapper.Map<ReadMediaDto>(item);
     }
 
-    public IEnumerable<ReadMediaDto>? GetByString(string mediaString)
+    public async Task<IEnumerable<ReadMediaDto>?> GetByStringAsync(string mediaString)
     {
-        var items = _repository.GetByString(mediaString);
+        var items = await _repository.GetByStringAsync(mediaString);
 
         return _mapper.Map<List<ReadMediaDto>>(items);
     }
 
-    public Media Create(CreateMediaDto mediaDto)
+    public async Task<Media> CreateAsync(CreateMediaDto mediaDto)
     {
         var media = _mapper.Map<Media>(mediaDto);
         _repository.Add(media);
-        _repository.SaveChanges();
+        await _repository.SaveChangesAsync();
         return media;
     }
 
     public async Task<bool> UpdateAsync(int id, UpdateMediaDto mediaDto)
     {
-        var item = await _repository.GetById(id);
+        var item = await _repository.GetByIdAsync(id);
         if (item == null)
         {
             return false;
@@ -68,13 +68,13 @@ public class MediaService
             }).ToList();
 
         _repository.Update(item);
-        _repository.SaveChanges();
+        await _repository.SaveChangesAsync();
         return true;
     }
 
     public async Task<bool> PartialUpdateAsync(int id, PartialUpdateMediaDto mediaDto)
     {
-        var item = await _repository.GetById(id);
+        var item = await _repository.GetByIdAsync(id);
 
         if (item == null)
         {
@@ -95,20 +95,20 @@ public class MediaService
                 }).ToList();
         }
         _repository.Update(item);
-        _repository.SaveChanges();
+        await _repository.SaveChangesAsync();
 
         return true;
     }
 
-    public async Task<bool> Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var item = await _repository.GetById(id);
+        var item = await _repository.GetByIdAsync(id);
         if (item == null)
         {
             return false;
         }
         _repository.Remove(item);
-        _repository.SaveChanges();
+        await _repository.SaveChangesAsync();
         return true;
     }
 }

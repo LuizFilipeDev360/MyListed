@@ -19,20 +19,20 @@ public class MediaController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<ReadMediaDto> Get([FromQuery] string mediaString = null)
+    public async Task<IEnumerable<ReadMediaDto>> Get([FromQuery] string mediaString = null)
     {
         if (string.IsNullOrEmpty(mediaString))
         {
-            return _service.GetAll();
+            return await _service.GetAllAsync();
         }
-        var media = _service.GetByString(mediaString);
+        var media = await _service.GetByStringAsync(mediaString);
         return media;
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    public async Task<IActionResult> GetById(int id)
     {
-        var media = _service.GetById(id);
+        var media = await _service.GetByIdAsync(id);
         if (media == null)
         {
             return NotFound();
@@ -41,14 +41,14 @@ public class MediaController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] CreateMediaDto mediaDto)
+    public async Task<IActionResult> Post([FromBody] CreateMediaDto mediaDto)
     {   
-        Media media = _service.Create(mediaDto);
+        Media media = await _service.CreateAsync(mediaDto);
         return CreatedAtAction(nameof(Get), new { id = media.Id }, media);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutAsync(int id, [FromBody] UpdateMediaDto mediaDto)
+    public async Task<IActionResult> Put(int id, [FromBody] UpdateMediaDto mediaDto)
     {
         var exist = await _service.UpdateAsync(id, mediaDto);
         if (exist != true)
@@ -59,7 +59,7 @@ public class MediaController : ControllerBase
     }
 
     [HttpPatch("{id}")]
-    public async Task<IActionResult> PatchAsync(int id, PartialUpdateMediaDto mediaDto)
+    public async Task<IActionResult> Patch(int id, PartialUpdateMediaDto mediaDto)
     {
         var exist = await _service.PartialUpdateAsync(id, mediaDto);
         if (exist != true)
@@ -72,9 +72,9 @@ public class MediaController : ControllerBase
 
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var exist = await _service.Delete(id);
+        var exist = await _service.DeleteAsync(id);
         if (exist != true)
         {
             return NotFound();

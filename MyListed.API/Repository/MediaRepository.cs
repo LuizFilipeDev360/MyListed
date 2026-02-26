@@ -2,6 +2,7 @@
 using MyListed.API.Data;
 using MyListed.API.Models;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MyListed.API.Repository;
 
@@ -14,22 +15,20 @@ public class MediaRepository
         _context = context;
     }
 
-    public IEnumerable<Media> GetAll()
+    public async Task<IEnumerable<Media>> GetAllAsync()
     {
         var media = _context.Media.Include(m => m.MediaGenres).ThenInclude(mg => mg.Genre).AsQueryable();
-        return media;
+        return await media.ToListAsync();
     }
 
-    public async Task<Media?> GetById(int id)
+    public async Task<Media?> GetByIdAsync(int id)
     {
         var media = await _context.Media.Include(m => m.MediaGenres).ThenInclude(mg => mg.Genre).FirstOrDefaultAsync(m => m.Id == id);
         return media;
     }
 
-    public IEnumerable<Media> GetByString(string s)
+    public async Task<IEnumerable<Media>> GetByStringAsync(string s)
     {
-        s = s.ToLower();
-
         var query = _context.Media
         .Include(m => m.MediaGenres)
             .ThenInclude(mg => mg.Genre)
@@ -38,11 +37,11 @@ public class MediaRepository
         if (!string.IsNullOrWhiteSpace(s))
         {
             query = query.Where(m =>
-                EF.Functions.Like(m.Title.ToLower(), $"%{s}%"));
+                EF.Functions.Like(m.Title, $"%{s}%"));
         }
 
 
-        return query;
+        return await query.ToListAsync();
     }
 
     public void Add(Media media)
@@ -60,8 +59,8 @@ public class MediaRepository
         _context.Media.Remove(media);
     }
 
-    public void SaveChanges()
+    public async Task SaveChangesAsync()
     {
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 }

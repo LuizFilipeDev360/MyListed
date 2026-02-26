@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyListed.API.DTOs;
 using MyListed.API.Models;
 using MyListed.API.Services;
+using System.Threading.Tasks;
 
 namespace MyListed.API.Controllers;
 
@@ -18,20 +19,20 @@ public class GenreController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<ReadGenreDto> Get([FromQuery] string genreString = null)
+    public async Task<IEnumerable<ReadGenreDto>> Get([FromQuery] string genreString = null)
     {
         if (string.IsNullOrEmpty(genreString))
         {
-            return _service.GetAll();
+            return await _service.GetAllAsync();
         }
-        var genre = _service.GetByString(genreString);
+        var genre =await _service.GetByStringAsync(genreString);
         return genre;
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    public async Task<IActionResult> GetById(int id)
     {
-        var genre = _service.GetById(id);
+        var genre = await _service.GetByIdAsync(id);
         if (genre == null)
         {
             return NotFound();
@@ -40,16 +41,16 @@ public class GenreController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] GenreDto genreDto)
+    public async Task<IActionResult> Post([FromBody] GenreDto genreDto)
     {   
-        Genre genre = _service.Create(genreDto);
+        Genre genre = await _service.CreateAsync(genreDto);
         return CreatedAtAction(nameof(Get), new { id = genre.Id }, genre);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] GenreDto genreDto)
+    public async Task<IActionResult> Put(int id, [FromBody] GenreDto genreDto)
     {
-        var exist = _service.Update(id, genreDto);
+        var exist =await _service.UpdateAsync(id, genreDto);
         if (exist != true)
         {
             return NotFound();
@@ -58,9 +59,9 @@ public class GenreController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var exist = _service.Delete(id);
+        var exist = await _service.DeleteAsync(id);
         if (exist != true)
         {
             return NotFound();

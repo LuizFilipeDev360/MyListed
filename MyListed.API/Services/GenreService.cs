@@ -3,6 +3,7 @@ using MyListed.API.Data;
 using MyListed.API.DTOs;
 using MyListed.API.Models;
 using MyListed.API.Repository;
+using System.Threading.Tasks;
 
 namespace MyListed.API.Services;
 
@@ -17,15 +18,15 @@ public class GenreService
         _repository = repository;
     }
 
-    public IEnumerable<ReadGenreDto> GetAll()
+    public async Task<IEnumerable<ReadGenreDto>> GetAllAsync()
     {
-        var result = _repository.GetAll();
+        var result = await _repository.GetAllAsync();
         return _mapper.Map<List<ReadGenreDto>>(result);
     }
 
-    public ReadGenreDto? GetById(int id)
+    public async Task<ReadGenreDto?> GetByIdAsync(int id)
     {
-        var item = _repository.GetById(id);
+        var item = await _repository.GetByIdAsync(id);
         if (item == null)
         {
             return null;
@@ -33,43 +34,43 @@ public class GenreService
         return _mapper.Map<ReadGenreDto>(item);
     }
 
-    public IEnumerable<ReadGenreDto>? GetByString(string genreString)
+    public async Task<IEnumerable<ReadGenreDto>?> GetByStringAsync(string genreString)
     {
-        var items = _repository.GetByString(genreString);
+        var items = await _repository.GetByStringAsync(genreString);
 
         return _mapper.Map<List<ReadGenreDto>>(items);
     }
 
-    public Genre Create(GenreDto genreDto)
+    public async Task<Genre> CreateAsync(GenreDto genreDto)
     {
         var genre = _mapper.Map<Genre>(genreDto);
         _repository.Add(genre);
-        _repository.SaveChanges();
+        await _repository.SaveChangesAsync();
         return genre;
     }
 
-    public bool Update(int id, GenreDto genreDto)
+    public async Task<bool> UpdateAsync(int id, GenreDto genreDto)
     {
-        var item = _repository.GetById(id);
+        var item = await _repository.GetByIdAsync(id);
         if (item == null)
         {
             return false;
         }
         _mapper.Map(genreDto, item);
         _repository.Update(item);
-        _repository.SaveChanges();
+        await _repository.SaveChangesAsync();
         return true;
     }
 
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var item = _repository.GetById(id);
+        var item = await _repository.GetByIdAsync(id);
         if (item == null)
         {
             return false;
         }
         _repository.Remove(item);
-        _repository.SaveChanges();
+        await _repository.SaveChangesAsync();
         return true;
     }
 }
