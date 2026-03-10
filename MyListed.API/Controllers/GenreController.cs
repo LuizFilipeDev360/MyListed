@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyListed.API.DTOs;
 using MyListed.API.Models;
@@ -19,6 +20,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IEnumerable<ReadGenreDto>> Get([FromQuery] string genreString = null)
     {
         if (string.IsNullOrEmpty(genreString))
@@ -30,6 +32,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> GetById(int id)
     {
         var genre = await _service.GetByIdAsync(id);
@@ -41,6 +44,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Post([FromBody] GenreDto genreDto)
     {   
         Genre genre = await _service.CreateAsync(genreDto);
@@ -48,6 +52,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> Put(int id, [FromBody] GenreDto genreDto)
     {
         var exist =await _service.UpdateAsync(id, genreDto);
@@ -59,6 +64,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> Delete(int id)
     {
         var exist = await _service.DeleteAsync(id);

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MyListed.API.Models;
 
 namespace MyListed.API.Data;
 
-public class MediaContext : DbContext
+public class MediaContext : IdentityDbContext<ApplicationUser>
 {
     public MediaContext(DbContextOptions<MediaContext> opts): base(opts)
     {

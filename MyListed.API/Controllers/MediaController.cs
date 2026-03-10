@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyListed.API.DTOs;
 using MyListed.API.Models;
@@ -41,6 +42,7 @@ public class MediaController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Post([FromBody] CreateMediaDto mediaDto)
     {   
         Media media = await _service.CreateAsync(mediaDto);
@@ -48,6 +50,7 @@ public class MediaController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> Put(int id, [FromBody] UpdateMediaDto mediaDto)
     {
         var exist = await _service.UpdateAsync(id, mediaDto);
@@ -59,6 +62,7 @@ public class MediaController : ControllerBase
     }
 
     [HttpPatch("{id}")]
+    [Authorize]
     public async Task<IActionResult> Patch(int id, PartialUpdateMediaDto mediaDto)
     {
         var exist = await _service.PartialUpdateAsync(id, mediaDto);
@@ -72,6 +76,7 @@ public class MediaController : ControllerBase
 
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> Delete(int id)
     {
         var exist = await _service.DeleteAsync(id);
