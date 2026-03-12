@@ -42,7 +42,7 @@ public class MediaController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> Post([FromBody] CreateMediaDto mediaDto)
     {   
         Media media = await _service.CreateAsync(mediaDto);
@@ -50,7 +50,7 @@ public class MediaController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> Put(int id, [FromBody] UpdateMediaDto mediaDto)
     {
         var exist = await _service.UpdateAsync(id, mediaDto);
@@ -62,7 +62,7 @@ public class MediaController : ControllerBase
     }
 
     [HttpPatch("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> Patch(int id, PartialUpdateMediaDto mediaDto)
     {
         var exist = await _service.PartialUpdateAsync(id, mediaDto);
@@ -76,7 +76,7 @@ public class MediaController : ControllerBase
 
 
     [HttpDelete("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> Delete(int id)
     {
         var exist = await _service.DeleteAsync(id);

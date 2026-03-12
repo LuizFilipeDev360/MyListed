@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using MyListed.API.Data;
@@ -14,7 +15,7 @@ builder.Services.AddDbContext<MediaContext>(options =>
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddEntityFrameworkStores<MediaContext>();
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<MediaContext>();
 
 // Add services to the container.
 
@@ -63,6 +64,20 @@ builder.Services.AddScoped<GenreService>();
 builder.Services.AddScoped<GenreRepository>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    string[] roles = { "Admin", "Manager", "User" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+            await roleManager.CreateAsync(new IdentityRole(role));
+    }
+}
 
 app.MapGroup("Auth").MapIdentityApi<ApplicationUser>().WithTags("Authorization");
 

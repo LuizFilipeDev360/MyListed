@@ -20,7 +20,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<IEnumerable<ReadGenreDto>> Get([FromQuery] string genreString = null)
     {
         if (string.IsNullOrEmpty(genreString))
@@ -32,7 +32,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> GetById(int id)
     {
         var genre = await _service.GetByIdAsync(id);
@@ -44,7 +44,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> Post([FromBody] GenreDto genreDto)
     {   
         Genre genre = await _service.CreateAsync(genreDto);
@@ -52,7 +52,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> Put(int id, [FromBody] GenreDto genreDto)
     {
         var exist =await _service.UpdateAsync(id, genreDto);
@@ -64,7 +64,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> Delete(int id)
     {
         var exist = await _service.DeleteAsync(id);
