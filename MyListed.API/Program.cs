@@ -63,6 +63,9 @@ builder.Services.AddScoped<MediaRepository>();
 builder.Services.AddScoped<GenreService>();
 builder.Services.AddScoped<GenreRepository>();
 
+builder.Services.AddScoped<UserMediaService>();
+builder.Services.AddScoped<UserMediaRepository>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

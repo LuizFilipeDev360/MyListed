@@ -15,7 +15,10 @@ public class MediaContext : IdentityDbContext<ApplicationUser, IdentityRole, str
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<MediaGenre>()
-            .HasKey(mc => new { mc.MediaId, mc.GenreId });
+            .HasKey(mg => new { mg.MediaId, mg.GenreId });
+
+        modelBuilder.Entity<UserMedia>()
+            .HasKey(um => new { um.UserId, um.MediaId });
 
         base.OnModelCreating(modelBuilder);
     }
@@ -23,4 +26,5 @@ public class MediaContext : IdentityDbContext<ApplicationUser, IdentityRole, str
     public DbSet<Media> Media { get; set; }
     public DbSet<Genre> Genres { get; set; }
     public DbSet<MediaGenre> MediaGenres { get; set; }
+    public DbSet<UserMedia> UserMedia { get; set; }
 }

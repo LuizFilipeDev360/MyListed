@@ -10,4 +10,6 @@ public class ApplicationUser : IdentityUser
         {
             CreatedAt = DateTime.UtcNow;
         }
+
+    public ICollection<UserMedia>? UserMedia { get; set; } = new List<UserMedia>();
 }

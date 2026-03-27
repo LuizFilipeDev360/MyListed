@@ -16,4 +16,6 @@ public class Media
     public string? Description { get; set; }
 
     public ICollection<MediaGenre>? MediaGenres { get; set; } = new List<MediaGenre>();
+
+    public ICollection<UserMedia>? UserMedia { get; set; } = new List<UserMedia>();
 }
