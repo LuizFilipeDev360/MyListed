@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -15,7 +16,7 @@ builder.Services.AddDbContext<MediaContext>(options =>
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<MediaContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<MediaContext>().AddDefaultTokenProviders();
 
 // Add services to the container.
 
@@ -23,6 +24,31 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
 builder.Services.AddSwaggerGen(option =>
 {
     option.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -66,6 +92,10 @@ builder.Services.AddScoped<GenreRepository>();
 builder.Services.AddScoped<UserMediaService>();
 builder.Services.AddScoped<UserMediaRepository>();
 
+
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<TokenService>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -82,8 +112,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.MapGroup("Auth").MapIdentityApi<ApplicationUser>().WithTags("Authorization");
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -93,8 +121,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowAll");
 
 app.Run();

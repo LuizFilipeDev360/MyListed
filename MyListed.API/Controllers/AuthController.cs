@@ -2,36 +2,36 @@
 using Microsoft.AspNetCore.Mvc;
 using MyListed.API.DTOs;
 using MyListed.API.Models;
+using MyListed.API.Services;
 
 namespace MyListed.API.Controllers;
 
 [ApiController]
-[Route("")]
+[Route("[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly UserManager<ApplicationUser> _userManager;
+    private AuthService _authService;
 
-    public AuthController(UserManager<ApplicationUser> userManager)
+    public AuthController(AuthService authService)
     {
-        _userManager = userManager;
+        _authService = authService;
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(RegisterAuthDto model)
+    public async Task<IActionResult> Register(RegisterAuthDto dto)
     {
-        var user = new ApplicationUser
+        await _authService.Register(dto);
+
+        return Ok("User registered successfully");
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginAuthDto dto)
+    {
+        var token = await _authService.Login(dto);
+        return Ok(new
         {
-            UserName = model.Email,
-            Email = model.Email
-        };
-
-        var result = await _userManager.CreateAsync(user, model.Password);
-
-        if (!result.Succeeded)
-            return BadRequest(result.Errors);
-
-        await _userManager.AddToRoleAsync(user, "User");
-
-        return Ok();
+            accessToken = token
+        });
     }
 }
