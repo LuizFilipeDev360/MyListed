@@ -13,5 +13,6 @@ public class UpdateMediaDto
     public MediaKind Kind { get; set; }
     [MaxLength(1000)]
     public string? Description { get; set; }
+    public string? ImageUrl { get; set; }
     public List<int> GenreIds { get; set; }
 }

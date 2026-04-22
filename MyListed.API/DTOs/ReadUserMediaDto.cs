@@ -4,7 +4,11 @@ namespace MyListed.API.DTOs;
 
 public class ReadUserMediaDto
 {
+    public int MediaId { get; set; }
+
     public string Titulo { get; set; }
+
+    public string? ImageUrl { get; set; }
 
     [Range(0, 10)]
     public int? Rating { get; set; }

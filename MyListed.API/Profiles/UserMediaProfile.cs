@@ -11,6 +11,10 @@ public class UserMediaProfile : Profile
         CreateMap<UserMedia, ReadUserMediaDto>().ForMember(dest => dest.Titulo,
                 opt => opt.MapFrom(src =>
                     src.Media.Title
+                ))
+            .ForMember(dest => dest.ImageUrl,
+                opt => opt.MapFrom(src =>
+                    src.Media.ImageUrl
                 ));
         CreateMap<PartialUpdateUserMediaDto, UserMedia>().ForMember(dest => dest.UserId, opt => opt.Ignore()).ForMember(dest => dest.User, opt => opt.Ignore())
             .ForMember(dest => dest.Media, opt => opt.Ignore()).ForMember(dest => dest.MediaId, opt => opt.Ignore())

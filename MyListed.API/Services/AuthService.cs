@@ -37,14 +37,12 @@ public class AuthService
 
     public async Task<string> Login(LoginAuthDto dto)
     {
-        var result = await _signInManager.PasswordSignInAsync(dto.Email, dto.Password, false, false);
 
-        if(!result.Succeeded)
-        {
+        var user = await _userManager.FindByEmailAsync(dto.User) ?? await _userManager.FindByNameAsync(dto.User);
+
+        if (user == null || !await _userManager.CheckPasswordAsync(user, dto.Password))
             throw new ApplicationException("Invalid login attempt");
-        }
 
-        var user = _signInManager.UserManager.Users.FirstOrDefault(u => u.Email == dto.Email);
 
         var token = await _tokenService.GenerateToken(user);
 

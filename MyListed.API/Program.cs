@@ -96,6 +96,8 @@ builder.Services.AddScoped<UserMediaRepository>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<TokenService>();
 
+builder.Services.AddScoped<UserService>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
