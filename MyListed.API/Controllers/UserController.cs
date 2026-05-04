@@ -20,6 +20,22 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
+    [HttpGet("Profile")]
+    public async Task<IActionResult> GetProfile()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId == null)
+            return Unauthorized();
+
+        var user = await _userService.GetUserById(userId);
+        if (user == null)
+            return NotFound();
+
+        return Ok(user);
+    }
+
+    [Authorize]
     [HttpPut("change-username")]
     public async Task<IActionResult> ChangeUsername(string newUsername)
     {
@@ -37,6 +53,6 @@ public class UserController : ControllerBase
         if (!result)
             return BadRequest("Não foi possível alterar o username.");
 
-        return Ok("Username atualizado com sucesso.");
+        return Ok(new { message = "Username atualizado com sucesso." });
     }
 }

@@ -23,6 +23,14 @@ public class UserMediaService
         return _mapper.Map<List<ReadUserMediaDto>>(result);
     }
 
+    public async Task<ReadUserMediaDto?> GetByIdAsync(string userId,int mediaId)
+    {
+        var result = await _repository.GetByIdAsync(userId, mediaId);
+        if (result == null)
+            return null;
+        return _mapper.Map<ReadUserMediaDto>(result);
+    }
+
     public async Task<bool> CreateAsync(string userId, CreateUserMediaDto dto)
     {
         var exists = await _repository.ExistsAsync(userId, dto.MediaId);

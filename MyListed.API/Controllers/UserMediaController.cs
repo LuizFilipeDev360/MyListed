@@ -33,6 +33,19 @@ public class UserMediaController : ControllerBase
         return await _service.GetAllAsync(userId);
     }
 
+    [Authorize]
+    [HttpGet("{mediaId}")]
+    public async Task<IActionResult> GetById(int mediaId)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+            return Unauthorized();
+        var result = await _service.GetByIdAsync(userId, mediaId);
+        if (result == null)
+            return NotFound();
+        return Ok(result);
+    }
+
 
     [Authorize]
     [HttpPost]

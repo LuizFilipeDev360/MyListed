@@ -10,10 +10,24 @@ namespace MyListed.API.Services;
 public class UserService
 {
     private UserManager<ApplicationUser> _userManager;
+    private IMapper _mapper;
 
-    public UserService(UserManager<ApplicationUser> userManager)
+    public UserService(UserManager<ApplicationUser> userManager, IMapper mapper)
     {
         _userManager = userManager;
+        _mapper = mapper;
+    }
+
+    public async Task<ReadUserDto> GetUserById(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        
+        if (user == null)
+            return null;
+
+        var userDto = _mapper.Map<ReadUserDto>(user);
+
+        return userDto;
     }
 
     public async Task<bool> ChangeUsername(string newUsername, string userId)
