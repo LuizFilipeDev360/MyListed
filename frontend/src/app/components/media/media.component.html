@@ -1,0 +1,23 @@
+<div style="cursor: pointer;">
+    <h3>{{ media.title }}</h3>
+    <img [src]="media.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"/>
+    <p>{{ media.year }}</p>
+</div>
+
+@if(mediaUser === null){
+    <div style="cursor: pointer;">
+        <h3>{{ media.title }}</h3>
+        <img [src]="media.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"/>
+    <p>{{ media.year }}</p>
+</div>
+    <p>Oi ta sem user</p>
+}@else{
+    <div style="cursor: pointer;">
+        <h3>{{ media.titulo }}</h3>
+        <img [src]="media.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"/>
+        <p>Rating: {{mediaUser.rating}}</p>
+        <p>Review: {{mediaUser.review}}</p>
+        <p>{{ media.year }}</p>
+</div>
+    <p>Oi tem user</p>
+}

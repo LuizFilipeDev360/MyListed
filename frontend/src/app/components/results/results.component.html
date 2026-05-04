@@ -1,0 +1,10 @@
+<p>results works!</p>
+
+
+@for (item of mediaList; track item.id) {
+  <div>
+    <h3>{{ item.title }}</h3>
+    <img [src]="item.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'" style="width: 150px; height: auto;" />
+    <p>{{ item.year }}</p>
+  </div>
+}

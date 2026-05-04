@@ -1,0 +1,69 @@
+
+<form (ngSubmit)="postMedia()" #postMediaForm="ngForm">
+
+<h1>postMedia</h1>
+
+  <div>
+    <label>Título</label>
+    <input 
+      type="text" 
+      name="title" 
+      [(ngModel)]="media.title" 
+      required 
+    />
+  </div>
+
+  <div>
+    <label>Ano</label>
+    <input 
+      type="number" 
+      name="year" 
+      [(ngModel)]="media.year"
+    />
+  </div>
+
+  <div>
+    <label>Tipo</label>
+    <input 
+      type="number" 
+      name="kind" 
+      [(ngModel)]="media.kind"
+      required
+    />
+  </div>
+
+  <div>
+    <label>Descrição</label>
+    <textarea 
+      name="description" 
+      [(ngModel)]="media.description">
+    </textarea>
+  </div>
+
+  <div>
+    <label>Imagem URL</label>
+    <input 
+      type="text" 
+      name="imageUrl" 
+      [(ngModel)]="media.imageUrl"
+    />
+  </div>
+<div>
+  <label>Gêneros</label>
+
+    @for (item of genreList; track item.id) {
+       <input 
+      type="checkbox"
+      [value]="item.id"
+      (change)="onGenreChange($event)"
+    />
+    {{ item.name }}
+  }
+</div>
+
+
+  <button type="submit" [disabled]="postMediaForm.invalid">
+    Criar Media
+  </button>
+
+</form>

@@ -1,0 +1,9 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  background: red;
+  z-index: 1000;
+}
+h2 {
+  margin: 0;
+}

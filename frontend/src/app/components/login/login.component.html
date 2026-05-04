@@ -1,0 +1,30 @@
+<p>login works!</p>
+<form (ngSubmit)="login()" #loginForm="ngForm">
+
+  <div>
+    <label>Email</label>
+    <input 
+      type="text" 
+      name="user" 
+      [(ngModel)]="user" 
+      required 
+    />
+  </div>
+
+  <div>
+    <label>Senha</label>
+    <input 
+      type="password" 
+      name="password" 
+      [(ngModel)]="password" 
+      required 
+    />
+  </div>
+
+  <button type="submit" [disabled]="loginForm.invalid">
+    Entrar
+  </button>
+
+</form>
+
+<a routerLink="/register">Criar conta</a>

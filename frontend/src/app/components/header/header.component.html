@@ -1,0 +1,21 @@
+<div class="navbar" style="background-color: blue;">
+  <h2 style="cursor: pointer;" routerLink="/home">MyListed</h2>
+
+  <input [(ngModel)]="searchTerm" placeholder="Pesquisar..." />
+  <button (click)="search(searchTerm)">Buscar</button>
+
+  @if(!isLogged){
+    <button routerLink="/login">Login</button>
+  } @else if (role === "Admin" || role === "Manager") {
+    <span routerLink="/profile" style="cursor: pointer;">
+      Olá, {{ userName }}
+    </span>
+    <button routerLink="/mylist">MyList</button>
+    <button routerLink="/manager">Manager</button>
+  } @else {
+    <span routerLink="/profile" style="cursor: pointer;">
+      Olá, {{ userName }}
+    </span>
+    <button routerLink="/mylist">MyList</button>
+  }
+</div>

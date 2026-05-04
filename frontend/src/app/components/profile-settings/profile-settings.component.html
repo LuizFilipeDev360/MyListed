@@ -1,0 +1,21 @@
+<p>profile-settings works!</p>
+
+<form (ngSubmit)="updateUser()" #updateUserForm="ngForm">
+
+  <div>
+    <label>userName</label>
+    <input 
+      type="text" 
+      name="userName" 
+      [(ngModel)]="userName" 
+      required 
+    />
+  </div>
+
+  <button type="submit" [disabled]="updateUserForm.invalid">
+    Mudar
+  </button>
+
+</form>
+
+<button (click)="logout()">Sair</button>
