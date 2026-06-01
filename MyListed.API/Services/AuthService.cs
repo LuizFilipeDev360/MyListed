@@ -39,10 +39,10 @@ public class AuthService
     {
 
         var user = await _userManager.FindByEmailAsync(dto.User) ?? await _userManager.FindByNameAsync(dto.User);
-
+        
         if (user == null || !await _userManager.CheckPasswordAsync(user, dto.Password))
             throw new ApplicationException("Invalid login attempt");
-
+        
 
         var token = await _tokenService.GenerateToken(user);
 

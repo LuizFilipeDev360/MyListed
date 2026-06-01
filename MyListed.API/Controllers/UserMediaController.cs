@@ -28,7 +28,8 @@ public class UserMediaController : ControllerBase
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        //tenho que retornar algo se nao tiver userId
+        if (userId == null)
+            throw new UnauthorizedAccessException("User is not authorized.");
 
         return await _service.GetAllAsync(userId);
     }

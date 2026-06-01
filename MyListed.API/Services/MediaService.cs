@@ -94,6 +94,12 @@ public class MediaService
                     GenreId = id
                 }).ToList();
         }
+
+        if(mediaDto.Kind != null)
+        {
+            item.Kind = mediaDto.Kind.Value;
+        }
+
         _repository.Update(item);
         await _repository.SaveChangesAsync();
 

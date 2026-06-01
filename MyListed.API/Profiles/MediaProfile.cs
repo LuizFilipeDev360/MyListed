@@ -22,11 +22,11 @@ public class MediaProfile : Profile
             Name = src.Kind.ToString()
         })).ForMember(dest => dest.Genres,
                 opt => opt.MapFrom(src =>
-                    src.MediaGenres.Select(mg => mg.Genre.Name)
+                    src.MediaGenres.Select(mg => mg.Genre)
                 ));
         CreateMap<UpdateMediaDto, Media>().ForMember(dest => dest.MediaGenres, opt => opt.Ignore());
 
-        CreateMap<PartialUpdateMediaDto, Media>().ForMember(dest => dest.MediaGenres, opt => opt.Ignore()).ForAllMembers(opt =>
+        CreateMap<PartialUpdateMediaDto, Media>().ForMember(dest => dest.MediaGenres, opt => opt.Ignore()).ForMember(dest => dest.Kind, opt => opt.Ignore()).ForAllMembers(opt =>
         opt.Condition((src, dest, srcMember) => srcMember != null));
 
 

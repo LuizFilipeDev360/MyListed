@@ -11,5 +11,5 @@ public class ReadMediaDto
     public MediaKindDto Kind { get; set; }
     public string? Description { get; set; }
     public string? ImageUrl { get; set; }
-    public List<string> Genres { get; set; }
+    public List<ReadGenreDto> Genres { get; set; }
 }
