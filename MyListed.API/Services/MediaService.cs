@@ -26,12 +26,25 @@ public class MediaService
 
     public async Task<ReadMediaDto?> GetByIdAsync(int id)
     {
-        var item =await _repository.GetByIdAsync(id);
+        var item = await _repository.GetByIdAsync(id);
         if (item == null)
         {
             return null;
         }
-        return _mapper.Map<ReadMediaDto>(item);
+
+        var dto = _mapper.Map<ReadMediaDto>(item);
+
+        dto.AverageRating = item.UserMedia.Any() ? item.UserMedia.Average(r => r.Rating) : null;
+
+        dto.Reviews = item.UserMedia.Where(um => !string.IsNullOrEmpty(um.Review)).Select(um => um.Review).ToList();
+
+        dto.HowManyAddedToList = item.UserMedia.Count();
+
+        dto.HowManyWatched = item.UserMedia.Count(um => um.Watched is true);
+
+        dto.HowManyLikes = item.UserMedia.Count(um => um.Liked is true);
+
+        return dto;
     }
 
     public async Task<IEnumerable<ReadMediaDto>?> GetByStringAsync(string mediaString)

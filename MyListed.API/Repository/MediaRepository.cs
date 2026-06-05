@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyListed.API.Data;
 using MyListed.API.Models;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MyListed.API.Repository;
 
@@ -23,7 +21,7 @@ public class MediaRepository
 
     public async Task<Media?> GetByIdAsync(int id)
     {
-        var media = await _context.Media.Include(m => m.MediaGenres).ThenInclude(mg => mg.Genre).FirstOrDefaultAsync(m => m.Id == id);
+        var media = await _context.Media.Include(m => m.MediaGenres).ThenInclude(mg => mg.Genre).Include(um => um.UserMedia).FirstOrDefaultAsync(m => m.Id == id);
         return media;
     }
 

@@ -12,4 +12,14 @@ public class ReadMediaDto
     public string? Description { get; set; }
     public string? ImageUrl { get; set; }
     public List<ReadGenreDto> Genres { get; set; }
+
+    public double? AverageRating { get; set; }
+
+    public List<string> Reviews { get; set; } = new List<string>();
+
+    public int HowManyAddedToList { get; set; }
+
+    public int HowManyWatched { get; set; }
+
+    public int HowManyLikes { get; set; }
 }
