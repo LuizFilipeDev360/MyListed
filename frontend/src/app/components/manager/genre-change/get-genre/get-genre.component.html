@@ -1,0 +1,13 @@
+<div class="genre-list">
+
+    <h2>Gêneros Cadastrados</h2>
+
+    <div class="genres">
+        @for (item of genreList; track item.id) {
+            <span class="genre-item">
+                {{ item.id }} - {{ item.name }}
+            </span>
+        }
+    </div>
+
+</div>

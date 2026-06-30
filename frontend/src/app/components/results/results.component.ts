@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route } from '@angular/router';
+import { Router } from '@angular/router';
 import { MediaService } from '../../services/media.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class ResultsComponent {
   
   mediaList: any;
 
-  constructor(private route: ActivatedRoute, private api: MediaService) {}
+  constructor(private route: ActivatedRoute, private api: MediaService, private router: Router) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -24,5 +25,9 @@ export class ResultsComponent {
         console.log(data);
       });
     });
+  }
+
+  goToMedia(id: number) {
+    this.router.navigate(['/media', id]);
   }
 }

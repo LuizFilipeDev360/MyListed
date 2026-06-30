@@ -1,23 +1,148 @@
-<div style="cursor: pointer;">
-    <h3>{{ media.title }}</h3>
-    <img [src]="media.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"/>
-    <p>{{ media.year }}</p>
+@if(mediaUser === null){
+    <div class="media-details" style="cursor: pointer;">
+        <h2>{{ media.title }}</h2>
+        
+        <div class="stats">
+            <h4>⭐ {{ media.averageRating }}/10</h4>
+            <h4>📚 {{ media.howManyAddedToList }} Added to MyList</h4>
+            <h4>👀 {{ media.howManyWatched }} Watched</h4>
+            <h4>❤️ {{ media.howManyLikes }} Likes</h4>
+        </div>
+
+        <img [src]="media.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"/>
+    <h4>{{ media.year }}</h4>
+    <p>{{ media.description }}</p>
+    <button (click)="addToMyList()">Adicionar no MyList</button>
+
+    <h3>Reviews:</h3>
+    @for (item of media.reviews; track $index) {
+        <div class="review">
+            <h5>Review de {{item.userName}}</h5>
+            <p>{{item.review}}</p>
+        </div>
+    }
+</div>
+}@else{
+    <div class="media-details" style="cursor: pointer;">
+        <h2>{{ media.title }}</h2>
+        
+        <div class="stats">
+            <h4>⭐ {{ media.averageRating }}/10</h4>
+            <h4>📚 {{ media.howManyAddedToList }} Added to MyList</h4>
+            <h4>👀 {{ media.howManyWatched }} Watched</h4>
+            <h4>❤️ {{ media.howManyLikes }} Likes</h4>
+        </div>
+
+        <img [src]="media.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"/>
+    <h4>{{ media.year }}</h4>
+    <p>{{ media.description }}</p>
+
+        <div class="personal">
+    <h3>Seu Status</h3>
+
+    <div class="personal-stats">
+        <h4>⭐ Sua nota: {{ mediaUser.rating }}/10</h4>
+
+        <h4 (click)="watchMedia()">
+            @if(mediaUser.watched){
+                👀 Assistido
+            } @else {
+                ⏳ Não assistido
+            }
+        </h4>
+
+        <h4 (click)="likeMedia()">
+            @if(mediaUser.liked){
+                ❤️ Favoritado
+            } @else {
+                🤍 Favoritar
+            }
+        </h4>
+    </div>
+
+    @if(mediaUser.review){
+        <div class="my-review">
+            <h4>Sua review</h4>
+            <p>{{ mediaUser.review }}</p>
+        </div>
+    }
+
+    <button class="edit-btn" (click)="openEditModal()">
+        ✏️ Editar Status
+    </button>
+
+    <button class="delete-btn" (click)="deleteUserMedia()">
+        ❌ Remover do MyList
+    </button>
 </div>
 
-@if(mediaUser === null){
-    <div style="cursor: pointer;">
-        <h3>{{ media.title }}</h3>
-        <img [src]="media.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"/>
-    <p>{{ media.year }}</p>
+@if(isEditModalOpen){
+
+<div class="modal-overlay">
+
+    <div class="modal">
+
+        <h2>Editar Status</h2>
+
+        <form (ngSubmit)="editUserMedia()" #patchMediaForm="ngForm">
+
+            <div>
+                <label>Nota</label>
+                <input
+                    type="number"
+                    name="rating"
+                    min="0"
+                    max="10"
+                    [(ngModel)]="mediaUser.rating">
+            </div>
+
+            <div class="checkbox-group">
+                <input
+                    type="checkbox"
+                    name="watched"
+                    [(ngModel)]="mediaUser.watched">
+
+                <label>Assistido</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input
+                    type="checkbox"
+                    name="liked"
+                    [(ngModel)]="mediaUser.liked">
+
+                <label>Favoritado</label>
+            </div>
+
+            <div>
+                <label>Review</label>
+
+                <textarea
+                    name="review"
+                    [(ngModel)]="mediaUser.review">
+                </textarea>
+            </div>
+
+            <div class="modal-buttons">
+                <button type="submit">Salvar</button>
+                <button type="button" (click)="closeEditModal()">Fechar</button>
+            </div>
+
+        </form>
+
+    </div>
+
 </div>
-    <p>Oi ta sem user</p>
-}@else{
-    <div style="cursor: pointer;">
-        <h3>{{ media.titulo }}</h3>
-        <img [src]="media.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"/>
-        <p>Rating: {{mediaUser.rating}}</p>
-        <p>Review: {{mediaUser.review}}</p>
-        <p>{{ media.year }}</p>
+
+}
+
+
+    <h3>Reviews:</h3>
+    @for (item of media.reviews; track $index) {
+        <div class="review">
+            <h5>Review de {{item.userName}}</h5>
+            <p>{{item.review}}</p>
+        </div>
+    }
 </div>
-    <p>Oi tem user</p>
 }

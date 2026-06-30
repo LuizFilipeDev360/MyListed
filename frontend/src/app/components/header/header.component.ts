@@ -34,8 +34,6 @@ export class HeaderComponent {
       this.userName = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
       this.role = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
     }
-
-    console.log(localStorage.getItem('token'));
   }
 
   search(term: string) {

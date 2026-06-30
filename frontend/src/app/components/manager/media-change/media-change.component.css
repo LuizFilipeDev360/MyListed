@@ -1,0 +1,49 @@
+.accordion {
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+.section {
+    margin-bottom: 15px;
+
+    border: 2px solid #BAFF39;
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+.section button {
+    width: 100%;
+
+    padding: 18px;
+
+    border: none;
+
+    background: #6E6E6E;
+    color: white;
+
+    text-align: left;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.section button:hover {
+    background: #BAFF39;
+    color: black;
+}
+
+.section app-post-media-change,
+.section app-put-media-change,
+.section app-patch-media-change,
+.section app-delete-media-change {
+    display: block;
+
+    padding: 20px;
+
+    background: #1f1f1f;
+}

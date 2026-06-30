@@ -1,0 +1,39 @@
+.login-error .barra {
+  border-color: red;
+}
+
+.barra{
+  margin-top: 36px;
+  width: 150px;
+  height: 16px;
+  border: 2px solid #6E6E6E;
+  padding: 5px;
+}
+
+.barra:focus{
+  border: 2px solid #BAFF39;
+  box-shadow: 0;
+  outline: none;
+}
+
+
+button{
+    width: 100px;
+    height: 36px;
+    border: 2px solid #BAFF39;
+    background-color: #6E6E6E;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    margin-bottom: 20px;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+  margin-right: 10px;
+}
+
+a:hover{
+    color: #6E6E6E;
+}

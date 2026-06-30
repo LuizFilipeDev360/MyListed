@@ -1,11 +1,11 @@
-<p>profile works!</p>
 
+<div class="container">
+    <div>
+        <h3>{{ userName }}</h3>
+        <p>{{ email }}</p>
+        <p>{{ createdAt }}</p>
+    </div>
 
-<div>
-    <h3>{{ userName }}</h3>
-    <p>{{ email }}</p>
-    <p>{{ createdAt }}</p>
+    <button routerLink="/profile/settings">Editar usuário</button>
+    <router-outlet></router-outlet>
 </div>
-
-<button routerLink="/profile/settings">Editar</button>
-<router-outlet></router-outlet>

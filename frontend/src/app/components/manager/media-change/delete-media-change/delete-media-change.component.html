@@ -1,0 +1,41 @@
+
+<form (ngSubmit)="deleteMedia()" #deleteMediaForm="ngForm">
+
+<h1>deleteMedia</h1>
+
+  <div>
+    <label>Id</label>
+    <input 
+      type="number" 
+      name="id" 
+      [(ngModel)]="id"
+      (ngModelChange)="loadMedia()"
+      required
+    />
+  </div>
+
+    <div class="media-preview">
+
+    <h4>⚠️ Mídia que será removida</h4>
+
+    <p><strong>Título:</strong> {{ media.title }}</p>
+    <p><strong>Ano:</strong> {{ media.year }}</p>
+    <p><strong>Tipo:</strong> {{ media.kind }}</p>
+    <p><strong>Descrição:</strong> {{ media.description }}</p>
+    <p><strong>Imagem:</strong> {{ media.imageUrl }}</p>
+
+    <p>
+        <strong>Gêneros:</strong>
+
+        @for(item of media.genreNames; track item){
+            <span>{{ item }}</span>@if(!$last){, }
+        }
+    </p>
+
+</div>
+
+  <button type="submit" [disabled]="deleteMediaForm.invalid">
+    remover Media
+  </button>
+
+</form>

@@ -1,0 +1,29 @@
+<form (ngSubmit)="deleteGenre()" #deleteGenreForm="ngForm">
+
+<h1>Deletar Gênero</h1>
+
+<div>
+    <label>ID</label>
+    <input
+        type="number"
+        name="id"
+        [(ngModel)]="id"
+        (ngModelChange)="loadGenre()"
+        required
+    />
+</div>
+
+<div class="genre-preview">
+    <h4>⚠️ Gênero que será removido</h4>
+
+    <p>
+        <strong>Nome:</strong>
+        {{ genre.name }}
+    </p>
+</div>
+
+<button type="submit" [disabled]="deleteGenreForm.invalid">
+    Deletar Gênero
+</button>
+
+</form>

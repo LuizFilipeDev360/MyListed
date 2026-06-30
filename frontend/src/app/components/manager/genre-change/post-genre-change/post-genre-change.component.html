@@ -1,0 +1,20 @@
+<form (ngSubmit)="postGenre()" #postGenreForm="ngForm">
+
+  <h1>Criar Gênero</h1>
+
+  <div>
+      <label>Nome do Gênero</label>
+      <input
+          type="text"
+          name="name"
+          [(ngModel)]="genre.name"
+          required
+      />
+  </div>
+
+  <button type="submit" [disabled]="postGenreForm.invalid">
+      Criar Gênero
+  </button>
+
+</form>
+

@@ -1,0 +1,101 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    padding: 25px;
+
+    background: #1f1f1f;
+    color: white;
+}
+
+form h1 {
+    margin: 0;
+
+    text-align: center;
+
+    color: #ff5a5a;
+    font-size: 28px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 8px;
+
+    font-weight: bold;
+}
+
+form input {
+    padding: 10px;
+
+    border: 2px solid #6E6E6E;
+    border-radius: 8px;
+
+    background: #2b2b2b;
+    color: white;
+
+    font-size: 15px;
+}
+
+form input:focus {
+    outline: none;
+    border-color: #BAFF39;
+}
+
+.genre-preview {
+    padding: 18px;
+
+    background: #2b2b2b;
+
+    border-left: 5px solid #ff5a5a;
+    border-radius: 8px;
+}
+
+.genre-preview h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+
+    color: #ff5a5a;
+}
+
+.genre-preview p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.genre-preview strong {
+    color: #BAFF39;
+}
+
+form button {
+    align-self: center;
+
+    width: 180px;
+    height: 45px;
+
+    background: #c62828;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+form button:hover:not(:disabled) {
+    background: #ff4d4d;
+}
+
+form button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}

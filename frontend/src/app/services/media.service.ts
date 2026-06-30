@@ -26,4 +26,16 @@ export class MediaService {
     return this.http.post<any>(this.apiMediaUrl, media);
   }
 
+  putMedia(id:number, media: any){
+    return this.http.put<any>(this.apiMediaUrl+`/${id}`, media);
+  }
+
+  patchMedia(id:number, media: any){
+    return this.http.patch<any>(this.apiMediaUrl+`/${id}`, media);
+  }
+
+  deleteMedia(id:number){
+    return this.http.delete(this.apiMediaUrl+`/${id}`);
+  }
+
 }

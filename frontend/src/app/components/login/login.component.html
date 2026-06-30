@@ -1,9 +1,9 @@
-<p>login works!</p>
-<form (ngSubmit)="login()" #loginForm="ngForm">
+<form [class.login-error]="hasLoginError" (ngSubmit)="login()" #loginForm="ngForm">
 
   <div>
     <label>Email</label>
-    <input 
+    <input
+      class="barra" 
       type="text" 
       name="user" 
       [(ngModel)]="user" 
@@ -14,6 +14,7 @@
   <div>
     <label>Senha</label>
     <input 
+      class="barra"
       type="password" 
       name="password" 
       [(ngModel)]="password" 
@@ -27,4 +28,4 @@
 
 </form>
 
-<a routerLink="/register">Criar conta</a>
+<a routerLink="/register">Ainda não possui conta? clique para Criar conta</a>

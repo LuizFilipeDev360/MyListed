@@ -1,69 +1,15 @@
+<div class="manager-container">
 
-<form (ngSubmit)="postMedia()" #postMediaForm="ngForm">
+    <h2>Painel do Gerenciador</h2>
 
-<h1>postMedia</h1>
+    <div class="manager-actions">
+        <button routerLink="/manager/mediaChange">
+            🎬 Gerenciar Mídias
+        </button>
 
-  <div>
-    <label>Título</label>
-    <input 
-      type="text" 
-      name="title" 
-      [(ngModel)]="media.title" 
-      required 
-    />
-  </div>
+        <button routerLink="/manager/genreChange">
+            🏷️ Gerenciar Gêneros
+        </button>
+    </div>
 
-  <div>
-    <label>Ano</label>
-    <input 
-      type="number" 
-      name="year" 
-      [(ngModel)]="media.year"
-    />
-  </div>
-
-  <div>
-    <label>Tipo</label>
-    <input 
-      type="number" 
-      name="kind" 
-      [(ngModel)]="media.kind"
-      required
-    />
-  </div>
-
-  <div>
-    <label>Descrição</label>
-    <textarea 
-      name="description" 
-      [(ngModel)]="media.description">
-    </textarea>
-  </div>
-
-  <div>
-    <label>Imagem URL</label>
-    <input 
-      type="text" 
-      name="imageUrl" 
-      [(ngModel)]="media.imageUrl"
-    />
-  </div>
-<div>
-  <label>Gêneros</label>
-
-    @for (item of genreList; track item.id) {
-       <input 
-      type="checkbox"
-      [value]="item.id"
-      (change)="onGenreChange($event)"
-    />
-    {{ item.name }}
-  }
 </div>
-
-
-  <button type="submit" [disabled]="postMediaForm.invalid">
-    Criar Media
-  </button>
-
-</form>

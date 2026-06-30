@@ -1,0 +1,82 @@
+
+<form (ngSubmit)="putMedia()" #putMediaForm="ngForm">
+
+<h1>putMedia</h1>
+
+  <div>
+    <label>Id</label>
+    <input 
+      type="number" 
+      name="id" 
+      [(ngModel)]="id"
+      (ngModelChange)="loadMedia()"
+      required
+    />
+  </div>
+
+  <div>
+    <label>Título</label>
+    <input 
+      type="text" 
+      name="title" 
+      [(ngModel)]="media.title" 
+      required 
+    />
+  </div>
+
+  <div>
+    <label>Ano</label>
+    <input 
+      type="number" 
+      name="year" 
+      [(ngModel)]="media.year"
+    />
+  </div>
+
+  <div>
+    <label>Tipo</label>
+    <input 
+      type="number" 
+      name="kind" 
+      [(ngModel)]="media.kind"
+      required
+    />
+  </div>
+
+  <div>
+    <label>Descrição</label>
+    <textarea 
+      name="description" 
+      [(ngModel)]="media.description">
+    </textarea>
+  </div>
+
+  <div>
+    <label>Imagem URL</label>
+    <input 
+      type="text" 
+      name="imageUrl" 
+      [(ngModel)]="media.imageUrl"
+    />
+  </div>
+<div>
+  <label>Gêneros</label>
+  @for (item of genreList; track item.id) {
+      <label class="genre-item">
+        <input
+          type="checkbox"
+          [value]="item.id"
+          [checked]="media?.genreIds?.includes(item.id)"
+          (change)="onGenreChange($event)"
+        />
+        {{ item.name }}
+      </label>
+  }
+</div>
+
+
+  <button type="submit" [disabled]="putMediaForm.invalid">
+    editar Media
+  </button>
+
+</form>

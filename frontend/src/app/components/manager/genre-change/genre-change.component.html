@@ -1,0 +1,35 @@
+<app-get-genre></app-get-genre>
+
+<div class="accordion">
+
+    <div class="section">
+        <button (click)="toggle('post')">
+            POST /genre
+        </button>
+
+        @if(openSection === 'post'){
+            <app-post-genre-change></app-post-genre-change>
+        }
+    </div>
+
+    <div class="section">
+        <button (click)="toggle('put')">
+            PUT /genre
+        </button>
+
+        @if(openSection === 'put'){
+            <app-put-genre-change></app-put-genre-change>
+        }
+    </div>
+
+    <div class="section">
+        <button (click)="toggle('delete')">
+            DELETE /genre
+        </button>
+
+        @if(openSection === 'delete'){
+            <app-delete-genre-change></app-delete-genre-change>
+        }
+    </div>
+
+</div>

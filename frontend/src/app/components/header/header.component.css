@@ -1,9 +1,69 @@
 .navbar {
   position: sticky;
   top: 0;
-  background: red;
+  background-color: #6E6E6E;
+  display: flex;
+  justify-content: center;
+  align-content: center;
   z-index: 1000;
+  padding: 4px;
 }
+
 h2 {
   margin: 0;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+  margin-right: 10px;
+}
+
+.logo{
+  cursor: pointer;
+  flex: 0,33;
+  padding-right: 50px;
+}
+
+.barraPesquisa{
+  flex: 0,33;
+  padding-right: 50px;
+  height: 100px;
+}
+
+.barra{
+  margin-top: 36px;
+  width: 400px;
+  height: 36px;
+  border: 2px solid #6E6E6E;
+}
+
+.barra:focus{
+  border: 2px solid #BAFF39;
+  box-shadow: 0;
+  outline: none;
+}
+
+.botao{
+  width: 100px;
+  height: 36px;
+  border: 2px solid #6E6E6E;
+  background-color: #BAFF39;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.caminhos{
+  margin-top: 50px;
+  flex: 0,33;
+}
+
+.profile{
+  color: black;
+  background-color: #BAFF39;
+  padding: 10px;
+}
+
+.profile:hover{
+  border: 5px solid black;
 }

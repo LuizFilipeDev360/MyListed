@@ -19,9 +19,13 @@ export class RegisterComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
+   hasRegisterError = false;
+   passwordMismatch = false;
+
   register() {
     if (this.password !== this.confirmPassword) {
     alert('As senhas não coincidem');
+    this.passwordMismatch = true;
     return;
   }
 
@@ -30,10 +34,14 @@ export class RegisterComponent {
       next: (res) => {
         console.log(res);
 
+        this.hasRegisterError = false;
+        this.passwordMismatch = false;
         this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Erro no register', err);
+        alert("Cadastro Inválido!")
+        this.hasRegisterError = true;
       }
     });
   } 

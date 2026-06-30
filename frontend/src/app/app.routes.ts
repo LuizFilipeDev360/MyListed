@@ -9,6 +9,8 @@ import { roleGuard } from './guards/role.guard';
 import { RegisterComponent } from './components/register/register.component';
 import { ResultsComponent } from './components/results/results.component';
 import { ManagerComponent } from './components/manager/manager.component';
+import { MediaChangeComponent } from './components/manager/media-change/media-change.component';
+import { GenreChangeComponent } from './components/manager/genre-change/genre-change.component';
 
 export const routes: Routes = [
     {
@@ -55,6 +57,18 @@ export const routes: Routes = [
     {
         path: 'manager',
         component: ManagerComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['Admin', 'Manager'] }
+    },
+    {
+        path: 'manager/mediaChange',
+        component: MediaChangeComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['Admin', 'Manager'] }
+    },
+    {
+        path: 'manager/genreChange',
+        component: GenreChangeComponent,
         canActivate: [roleGuard],
         data: { roles: ['Admin', 'Manager'] }
     }

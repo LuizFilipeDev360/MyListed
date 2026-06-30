@@ -1,21 +1,25 @@
-<div class="navbar" style="background-color: blue;">
-  <h2 style="cursor: pointer;" routerLink="/home">MyListed</h2>
+<div class="navbar">
+  <img class="logo" src="LogoMyListed.png" width="203" routerLink="/home">
 
-  <input [(ngModel)]="searchTerm" placeholder="Pesquisar..." />
-  <button (click)="search(searchTerm)">Buscar</button>
-
-  @if(!isLogged){
-    <button routerLink="/login">Login</button>
-  } @else if (role === "Admin" || role === "Manager") {
-    <span routerLink="/profile" style="cursor: pointer;">
-      Olá, {{ userName }}
-    </span>
-    <button routerLink="/mylist">MyList</button>
-    <button routerLink="/manager">Manager</button>
-  } @else {
-    <span routerLink="/profile" style="cursor: pointer;">
-      Olá, {{ userName }}
-    </span>
-    <button routerLink="/mylist">MyList</button>
-  }
+  <div class="barraPesquisa">
+    <input class="barra" [(ngModel)]="searchTerm" placeholder="Pesquisar..." />
+    <button class="botao" (click)="search(searchTerm)">Buscar</button>
+  </div>
+  
+  <div class="caminhos">
+     @if(!isLogged){
+      <a routerLink="/login">Login</a>
+    } @else if (role === "Admin" || role === "Manager") {
+      <a class="profile" routerLink="/profile" style="cursor: pointer;">
+        Olá, {{ userName }}
+      </a>
+      <a routerLink="/mylist">MyList</a>
+      <a routerLink="/manager">Manager</a>
+    } @else {
+      <a class="profile" routerLink="/profile" style="cursor: pointer;">
+        Olá, {{ userName }}
+      </a>
+      <a routerLink="/mylist">MyList</a>
+    }
+  </div>
 </div>

@@ -1,0 +1,30 @@
+<form (ngSubmit)="putGenre()" #putGenreForm="ngForm">
+
+<h1>putGenre</h1>
+
+    <div>
+        <label>Id</label>
+        <input 
+        type="number" 
+        name="id" 
+        [(ngModel)]="id"
+        (ngModelChange)="loadGenre()"
+        required
+        />
+  </div>
+  <div>
+    <label>Título</label>
+    <input 
+      type="text" 
+      name="title" 
+      [(ngModel)]="genre.name" 
+      required 
+    />
+  </div>
+
+
+  <button type="submit" [disabled]="putGenreForm.invalid">
+    Editar Genre
+  </button>
+
+</form>

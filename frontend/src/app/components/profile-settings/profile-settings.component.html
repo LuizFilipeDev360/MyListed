@@ -1,10 +1,9 @@
-<p>profile-settings works!</p>
-
 <form (ngSubmit)="updateUser()" #updateUserForm="ngForm">
 
   <div>
-    <label>userName</label>
-    <input 
+    <label>UserName</label>
+    <input
+      class="barra" 
       type="text" 
       name="userName" 
       [(ngModel)]="userName" 
@@ -18,4 +17,4 @@
 
 </form>
 
-<button (click)="logout()">Sair</button>
+<button class="sair" (click)="logout()">Sair</button>

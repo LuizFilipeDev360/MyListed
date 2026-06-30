@@ -1,0 +1,11 @@
+.container {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.media {
+  flex: 0 0 calc(25% - 15px);
+  box-sizing: border-box;
+}

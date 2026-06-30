@@ -1,0 +1,43 @@
+<div class="accordion">
+
+    <div class="section">
+        <button (click)="toggle('post')">
+            POST /media
+        </button>
+
+        @if(openSection === 'post'){
+            <app-post-media-change></app-post-media-change>
+        }
+    </div>
+
+    <div class="section">
+        <button (click)="toggle('put')">
+            PUT /media
+        </button>
+
+        @if(openSection === 'put'){
+            <app-put-media-change></app-put-media-change>
+        }
+    </div>
+
+    <div class="section">
+        <button (click)="toggle('patch')">
+            PATCH /media
+        </button>
+
+        @if(openSection === 'patch'){
+            <app-patch-media-change></app-patch-media-change>
+        }
+    </div>
+
+    <div class="section">
+        <button (click)="toggle('delete')">
+            DELETE /media
+        </button>
+
+        @if(openSection === 'delete'){
+            <app-delete-media-change></app-delete-media-change>
+        }
+    </div>
+
+</div>

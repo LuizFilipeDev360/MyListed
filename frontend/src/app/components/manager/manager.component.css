@@ -1,0 +1,55 @@
+.manager-container {
+    max-width: 700px;
+
+    margin: 50px auto;
+    padding: 30px;
+
+    background: #1f1f1f;
+    border: 2px solid #BAFF39;
+    border-radius: 12px;
+
+    text-align: center;
+    color: white;
+}
+
+.manager-container h2 {
+    margin-bottom: 35px;
+
+    color: #BAFF39;
+}
+
+.manager-actions {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.manager-actions button {
+    width: 220px;
+    height: 80px;
+
+    border: 2px solid #BAFF39;
+    border-radius: 10px;
+
+    background: #6E6E6E;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+}
+
+.manager-actions button:hover {
+    background: #BAFF39;
+    color: black;
+
+    transform: translateY(-3px);
+}
+
+.manager-actions button:active {
+    transform: scale(0.98);
+}

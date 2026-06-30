@@ -29,4 +29,16 @@ export class UserMediaService {
       }
     });
   }
+
+  postUserMedia(mediaId: any) {
+    return this.http.post(this.apiUserMediaUrl, mediaId);
+  }
+
+  patchUserMedia(mediaId:number, mediaUser: any) {
+    return this.http.patch(this.apiUserMediaUrl+`/${mediaId}`, mediaUser);
+  }
+
+  deleteUserMedia(mediaId: number){
+    return this.http.delete(this.apiUserMediaUrl+`/${mediaId}`);
+  }
 }

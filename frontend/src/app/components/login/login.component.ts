@@ -18,10 +18,13 @@ export class LoginComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
+  hasLoginError = false;
+
   login() {
     this.auth.login(this.user, this.password).subscribe({
       next: (res) => {
         console.log(res);
+        this.hasLoginError = false;
 
         localStorage.setItem('token', res.accessToken);
 
@@ -31,6 +34,8 @@ export class LoginComponent {
       },
       error: (err) => {
         console.error('Erro no login', err);
+        this.hasLoginError = true;
+        alert("Erro no Login");
       }
     });
   }
