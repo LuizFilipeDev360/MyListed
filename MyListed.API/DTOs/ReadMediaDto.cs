@@ -15,7 +15,7 @@ public class ReadMediaDto
 
     public double? AverageRating { get; set; }
 
-    public List<string> Reviews { get; set; } = new List<string>();
+    public List<ReviewDto> Reviews { get; set; } = new List<ReviewDto>();
 
     public int HowManyAddedToList { get; set; }
 

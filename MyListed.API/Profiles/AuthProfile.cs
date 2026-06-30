@@ -8,6 +8,6 @@ public class AuthProfile : Profile
 {
     public AuthProfile()
     {
-        CreateMap<RegisterAuthDto, ApplicationUser>();
+        CreateMap<RegisterAuthDto, ApplicationUser>().ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
     }
 }

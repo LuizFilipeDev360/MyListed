@@ -36,7 +36,11 @@ public class MediaService
 
         dto.AverageRating = item.UserMedia.Any() ? item.UserMedia.Average(r => r.Rating) : null;
 
-        dto.Reviews = item.UserMedia.Where(um => !string.IsNullOrEmpty(um.Review)).Select(um => um.Review).ToList();
+        dto.Reviews = item.UserMedia.Where(um => !string.IsNullOrEmpty(um.Review)).Select(um => new ReviewDto
+        {
+            Review = um.Review,
+            UserName = um.User.UserName
+        }).ToList();
 
         dto.HowManyAddedToList = item.UserMedia.Count();
 

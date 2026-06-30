@@ -21,7 +21,7 @@ public class MediaRepository
 
     public async Task<Media?> GetByIdAsync(int id)
     {
-        var media = await _context.Media.Include(m => m.MediaGenres).ThenInclude(mg => mg.Genre).Include(um => um.UserMedia).FirstOrDefaultAsync(m => m.Id == id);
+        var media = await _context.Media.Include(m => m.MediaGenres).ThenInclude(mg => mg.Genre).Include(m => m.UserMedia).ThenInclude(um => um.User).FirstOrDefaultAsync(m => m.Id == id);
         return media;
     }
 

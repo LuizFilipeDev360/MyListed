@@ -29,7 +29,10 @@ public class AuthService
 
         if (!result.Succeeded)
         {
-            throw new ApplicationException("User registration failed");
+            var errors = string.Join(", ",
+            result.Errors.Select(e => e.Description));
+
+            throw new ApplicationException(errors);
         }
 
         await _userManager.AddToRoleAsync(user, "User");

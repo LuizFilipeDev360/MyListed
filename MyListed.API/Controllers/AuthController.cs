@@ -20,18 +20,35 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterAuthDto dto)
     {
-        await _authService.Register(dto);
+        try
+        {
+            await _authService.Register(dto);
 
-        return Ok("User registered successfully");
+            return Ok(new
+            {
+                message = "User registered successfully"
+            });
+        }
+        catch (ApplicationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginAuthDto dto)
     {
-        var token = await _authService.Login(dto);
-        return Ok(new
+        try
         {
-            accessToken = token
-        });
+            var token = await _authService.Login(dto);
+            return Ok(new
+            {
+                accessToken = token
+            });
+        }
+        catch (ApplicationException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
     }
 }
