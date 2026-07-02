@@ -1,4 +1,4 @@
-# 🎬 MyLIsted
+# 🎬 MyListed
 
 MyListed is a full-stack web application for managing media, including movies, TV shows, and books. It allows users to manage their personal media list, write reviews, rate media, mark items as watched, or mark them as favorites. Managers can create, edit, and delete media and genres through a dedicated management dashboard. The project was built with Angular, ASP.NET Core, Entity Framework Core, and SQL Server.
 
