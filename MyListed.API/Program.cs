@@ -84,7 +84,7 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 builder.Services.AddScoped<MediaService>();
-builder.Services.AddScoped<MediaRepository>();
+builder.Services.AddScoped<IMediaRepository, MediaRepository>();
 
 builder.Services.AddScoped<GenreService>();
 builder.Services.AddScoped<GenreRepository>();

@@ -10,9 +10,9 @@ namespace MyListed.API.Services;
 public class MediaService
 {
     private IMapper _mapper;
-    private MediaRepository _repository;
+    private IMediaRepository _repository;
 
-    public MediaService(IMapper mapper, MediaRepository repository)
+    public MediaService(IMapper mapper, IMediaRepository repository)
     {
         _mapper = mapper;
         _repository = repository;
@@ -58,12 +58,14 @@ public class MediaService
         return _mapper.Map<List<ReadMediaDto>>(items);
     }
 
-    public async Task<Media> CreateAsync(CreateMediaDto mediaDto)
+    public async Task<ReadMediaDto> CreateAsync(CreateMediaDto mediaDto)
     {
         var media = _mapper.Map<Media>(mediaDto);
         _repository.Add(media);
         await _repository.SaveChangesAsync();
-        return media;
+
+        var readMediaDto = _mapper.Map<ReadMediaDto>(media);
+        return readMediaDto;
     }
 
     public async Task<bool> UpdateAsync(int id, UpdateMediaDto mediaDto)

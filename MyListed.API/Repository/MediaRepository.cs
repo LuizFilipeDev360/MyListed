@@ -4,7 +4,7 @@ using MyListed.API.Models;
 
 namespace MyListed.API.Repository;
 
-public class MediaRepository
+public class MediaRepository : IMediaRepository
 {
     private MediaContext _context;
 

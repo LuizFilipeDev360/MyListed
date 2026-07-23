@@ -45,8 +45,8 @@ public class MediaController : ControllerBase
     [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> Post([FromBody] CreateMediaDto mediaDto)
     {   
-        Media media = await _service.CreateAsync(mediaDto);
-        return CreatedAtAction(nameof(Get), new { id = media.Id }, media);
+        ReadMediaDto readMediaDto = await _service.CreateAsync(mediaDto);
+        return CreatedAtAction(nameof(Get), new { id = readMediaDto.Id }, readMediaDto);
     }
 
     [HttpPut("{id}")]
