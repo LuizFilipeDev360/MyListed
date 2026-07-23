@@ -80,7 +80,7 @@ The backend uses .NET User Secrets to store sensitive information.
 
 Configure the following secrets before running the application:
 
-- `ConnectionStrings:DefaultConnection` (MySQL connection string)
+- `ConnectionStrings:MediaConnection` (MySQL connection string)
 - `Jwt:Key` (JWT signing key)
 
 ### Apply database migrations
