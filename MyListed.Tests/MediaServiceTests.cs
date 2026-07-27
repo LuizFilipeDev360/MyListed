@@ -114,7 +114,7 @@ public class MediaServiceTests
     }
 
     [Fact]
-    public async Task GetAllAsyncWithSuccess()
+    public async Task GetAllMediaAsyncWithSuccess()
     {
         //Arrange
 
@@ -159,7 +159,7 @@ public class MediaServiceTests
     }
 
     [Fact]
-    public async Task GetByIdAsyncWithSuccess()
+    public async Task GetMediaByIdAsyncWithSuccess()
     {
         //Arrange
 
@@ -241,7 +241,7 @@ public class MediaServiceTests
     }
 
     [Fact]
-    public async Task GetByIdAsyncNotFoundMedia()
+    public async Task GetMediaByIdAsyncNotFoundMedia()
     {
         //Arrange
 
@@ -266,7 +266,7 @@ public class MediaServiceTests
     }
 
     [Fact]
-    public async Task UpdateAsyncWithSuccess()
+    public async Task UpdateMediaAsyncWithSuccess()
     {
         //Arrange
         int id = 3;
@@ -325,7 +325,7 @@ public class MediaServiceTests
     }
 
     [Fact]
-    public async Task UpdateAsyncNotFoundMedia()
+    public async Task UpdateMediaAsyncNotFoundMedia()
     {
         //Arrange
 
@@ -369,7 +369,7 @@ public class MediaServiceTests
     }
 
     [Fact]
-    public async Task PartialUpdateAsyncWithSuccess()
+    public async Task PartialUpdateMediaAsyncWithSuccess()
     {
         //Arrange
         int id = 3;
@@ -424,7 +424,7 @@ public class MediaServiceTests
     }
 
     [Fact]
-    public async Task PartialUpdateAsyncNotFoundMedia()
+    public async Task PartialUpdateMediaAsyncNotFoundMedia()
     {
         //Arrange
 
@@ -466,7 +466,7 @@ public class MediaServiceTests
     }
 
     [Fact]
-    public async Task DeleteAsyncWithSuccess()
+    public async Task DeleteMediaAsyncWithSuccess()
     {
         //Arrange
 
@@ -506,7 +506,7 @@ public class MediaServiceTests
 
 
     [Fact]
-    public async Task DeleteAsyncNotFoundMedia()
+    public async Task DeleteMediaAsyncNotFoundMedia()
     {
         int id = 67;
 

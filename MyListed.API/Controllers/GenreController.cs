@@ -47,8 +47,8 @@ public class GenreController : ControllerBase
     [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> Post([FromBody] GenreDto genreDto)
     {   
-        Genre genre = await _service.CreateAsync(genreDto);
-        return CreatedAtAction(nameof(Get), new { id = genre.Id }, genre);
+        ReadGenreDto readGenreDto = await _service.CreateAsync(genreDto);
+        return CreatedAtAction(nameof(Get), new { id = readGenreDto.Id }, readGenreDto);
     }
 
     [HttpPut("{id}")]

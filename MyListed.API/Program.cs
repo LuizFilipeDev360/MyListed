@@ -87,7 +87,7 @@ builder.Services.AddScoped<MediaService>();
 builder.Services.AddScoped<IMediaRepository, MediaRepository>();
 
 builder.Services.AddScoped<GenreService>();
-builder.Services.AddScoped<GenreRepository>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 
 builder.Services.AddScoped<UserMediaService>();
 builder.Services.AddScoped<UserMediaRepository>();

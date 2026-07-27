@@ -10,9 +10,9 @@ namespace MyListed.API.Services;
 public class GenreService
 {
     private IMapper _mapper;
-    private GenreRepository _repository;
+    private IGenreRepository _repository;
 
-    public GenreService(IMapper mapper, GenreRepository repository)
+    public GenreService(IMapper mapper, IGenreRepository repository)
     {
         _mapper = mapper;
         _repository = repository;
@@ -41,12 +41,15 @@ public class GenreService
         return _mapper.Map<List<ReadGenreDto>>(items);
     }
 
-    public async Task<Genre> CreateAsync(GenreDto genreDto)
+    public async Task<ReadGenreDto> CreateAsync(GenreDto genreDto)
     {
         var genre = _mapper.Map<Genre>(genreDto);
         _repository.Add(genre);
         await _repository.SaveChangesAsync();
-        return genre;
+
+        var readGenreDto = _mapper.Map<ReadGenreDto>(genre);
+
+        return readGenreDto;
     }
 
     public async Task<bool> UpdateAsync(int id, GenreDto genreDto)

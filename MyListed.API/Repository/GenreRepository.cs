@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MyListed.API.Repository;
 
-public class GenreRepository
+public class GenreRepository : IGenreRepository
 {
     private MediaContext _context;
 
