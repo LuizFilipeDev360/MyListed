@@ -178,14 +178,218 @@ public class GenreServiceTests
             x => x.Map<ReadGenreDto>(It.IsAny<Genre>()),
             Times.Never);
     }
-}
 
-/*
- 
-    CreateGenreWithSuccess
-    UpdateGenreAsyncWithSuccess
-    UpdateGenreAsyncNotFoundGenre
-    DeleteGenreAsyncWithSuccess
-    DeleteGenreAsyncNotFoundGenre
- 
- */
+    [Fact]
+    public async Task CreateGenreWithSuccess()
+    {
+        //Arrange
+
+        var genreDto = new GenreDto()
+        {
+            Name = "Aventura"
+        };
+
+        var genre = new Genre()
+        {
+            Name = genreDto.Name
+        };
+
+        var readGenreDto = new ReadGenreDto()
+        {
+            Name = genreDto.Name
+        };
+
+        _mapperMock.Setup(x => x.Map<Genre>(genreDto)).Returns(genre);
+        _mapperMock.Setup(x => x.Map<ReadGenreDto>(genre)).Returns(readGenreDto);
+
+        var genreService = new GenreService(_mapperMock.Object, _repositoryMock.Object);
+
+        //Act
+
+        var result = await genreService.CreateAsync(genreDto);
+
+        //Assert
+
+        Assert.NotNull(result);
+
+        Assert.Equal(result.Name, genreDto.Name);
+
+        _repositoryMock.Verify(
+           x => x.Add(It.Is<Genre>(m => m.Name == genreDto.Name)),
+           Times.Once);
+
+        _repositoryMock.Verify(
+            x => x.SaveChangesAsync(),
+            Times.Once);
+
+        _mapperMock.Verify(
+            x => x.Map<Genre>(It.IsAny<GenreDto>()),
+            Times.Once);
+
+        _mapperMock.Verify(
+            x => x.Map<ReadGenreDto>(It.IsAny<Genre>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task UpdateGenreAsyncWithSuccess()
+    {
+        //Arrange
+        int id = 2;
+
+        GenreDto genreDto = new GenreDto()
+        {
+            Name = "Comédia"
+        };
+
+        Genre genre = new Genre()
+        {
+            Id = 2,
+            Name = "Ação"
+        };
+
+        _repositoryMock.Setup(x => x.GetByIdAsync(id)).ReturnsAsync(genre);
+        _mapperMock.Setup(x => x.Map(genreDto, genre)).Callback<GenreDto, Genre>((dto, genre) =>
+        {
+            genre.Id = 2;
+            genre.Name = dto.Name;
+        });
+
+        var genreService = new GenreService(_mapperMock.Object, _repositoryMock.Object);
+
+        //Act
+
+        var result = await genreService.UpdateAsync(id, genreDto);
+
+        //Assert
+
+        Assert.True(result);
+
+        Assert.Equal(id, genre.Id);
+        Assert.Equal(genreDto.Name, genre.Name);
+
+        _repositoryMock.Verify(
+            x => x.GetByIdAsync(id),
+            Times.Once);
+
+        _mapperMock.Verify(
+            x => x.Map(It.IsAny<GenreDto>(), It.IsAny<Genre>()),
+            Times.Once);
+
+        _repositoryMock.Verify(
+           x => x.Update(genre),
+           Times.Once);
+
+        _repositoryMock.Verify(
+          x => x.SaveChangesAsync(),
+          Times.Once);
+    }
+
+    [Fact]
+    public async Task UpdateGenreAsyncNotFoundGenre()
+    {
+        //Arrange
+
+        int id = 67;
+
+        GenreDto genreDto = new GenreDto()
+        {
+            Name = "Fantasia"
+        };
+
+        _repositoryMock.Setup(x => x.GetByIdAsync(id)).ReturnsAsync((Genre)null);
+
+        var genreService = new GenreService(_mapperMock.Object, _repositoryMock.Object);
+
+        //Act
+
+        var result = await genreService.UpdateAsync(id, genreDto);
+
+        //Assert
+
+        Assert.False(result);
+
+        _repositoryMock.Verify(
+            x => x.GetByIdAsync(id),
+            Times.Once);
+
+        _mapperMock.Verify(
+            x => x.Map(It.IsAny<GenreDto>(), It.IsAny<Genre>()),
+            Times.Never);
+
+        _repositoryMock.Verify(
+            x => x.Update(It.IsAny<Genre>()),
+            Times.Never);
+
+        _repositoryMock.Verify(
+            x => x.SaveChangesAsync(),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task DeleteGenreAsyncWithSuccess()
+    {
+        //Arrange
+
+        int id = 5;
+
+        Genre item = new Genre()
+        {
+            Id = 5,
+            Name = "Drama"
+        };
+
+        _repositoryMock.Setup(x => x.GetByIdAsync(id)).ReturnsAsync(item);
+
+        var genreService = new GenreService(_mapperMock.Object, _repositoryMock.Object);
+
+        //Act
+
+        var result = await genreService.DeleteAsync(id);
+
+        //Assert
+
+        Assert.True(result);
+
+        Assert.Equal(id, item.Id);
+
+        _repositoryMock.Verify(
+            x => x.Remove(It.IsAny<Genre>()),
+            Times.Once);
+
+        _repositoryMock.Verify(
+            x => x.SaveChangesAsync(),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task DeleteGenreAsyncNotFoundGenre()
+    {
+        int id = 67;
+
+        _repositoryMock.Setup(x => x.GetByIdAsync(id)).ReturnsAsync((Genre)null);
+
+
+        var genreService = new GenreService(_mapperMock.Object, _repositoryMock.Object);
+
+        //Act
+
+        var result = await genreService.DeleteAsync(id);
+
+        //Assert
+
+        Assert.False(result);
+
+        _repositoryMock.Verify(
+            x => x.GetByIdAsync(id),
+            Times.Once);
+
+        _repositoryMock.Verify(
+            x => x.Remove(It.IsAny<Genre>()),
+            Times.Never);
+
+        _repositoryMock.Verify(
+            x => x.SaveChangesAsync(),
+            Times.Never);
+    }
+}
